@@ -24,7 +24,6 @@ public class JPowerHourCmdLine
 		this.songLength = songLength;
 		songsToPlay = new ArrayList<PowerHourSong>();
 		initSongsList();
-		runPowerHour();
 	}
 	
 	private void initSongsList()
@@ -32,9 +31,21 @@ public class JPowerHourCmdLine
 		try
 		{
 			BufferedReader in = new BufferedReader(new FileReader(playlistFile));
-			String path = "";
-			while((path = in.readLine()) != null)
+			String line = "";
+			while((line = in.readLine()) != null)
 			{
+				String[] split = line.split(" ");
+				String path = split[0];
+				int mins = 0, sec = 0;
+				if(split.length > 1)
+				{
+					String[] split2 = split[1].split(":");
+					if(split2.length > 1)
+					{
+						mins = Integer.parseInt(split2[0]);
+						sec = Integer.parseInt(split2[1]);
+					}
+				}
 				File f = new File(path);
 				if(!f.exists())
 				{
@@ -52,6 +63,14 @@ public class JPowerHourCmdLine
 				{
 					PowerHourSong song = new PowerHourSong(f);
 					song.setPlayLength(songLength);
+					try
+					{
+						song.setStartPos(mins, sec);
+					}
+					catch(BasicPlayerException bpe)
+					{
+						//do nothing
+					}
 					songsToPlay.add(song);
 				}
 			}
@@ -63,7 +82,7 @@ public class JPowerHourCmdLine
 		}
 	}
 	
-	private void runPowerHour()
+	public void runPowerHour()
 	{
 		for(int songNumber = 0; songNumber < songsToPlay.size(); songNumber++)
 		{
@@ -103,7 +122,7 @@ public class JPowerHourCmdLine
             System.exit(2);
         }
         
-        Integer lengthValue = (Integer)parser.getOptionValue(lengthOption, new Integer(20));
+        Integer lengthValue = (Integer)parser.getOptionValue(lengthOption, new Integer(10));
         int length = lengthValue.intValue();
         
         String playlist = (String)parser.getOptionValue(playlistOption, "jPowerHour.jph");
@@ -126,5 +145,6 @@ public class JPowerHourCmdLine
         }
         
         JPowerHourCmdLine jpowerhour = new JPowerHourCmdLine(playlistFile, length);
+        jpowerhour.runPowerHour();
 	}
 }
