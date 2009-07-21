@@ -143,11 +143,39 @@ public class JPowerHourPlayer implements BasicPlayerListener
             }
 		}
 	}
+	
+	public String getTitle()
+	{
+		if(audioInfo != null)
+		{
+			if(audioInfo.containsKey("title"))
+			{
+				return (String) audioInfo.get("title");
+			}
+		}
+		return "";
+	}
+	
+	public String getArtist()
+	{
+		if(audioInfo != null)
+		{
+			if(audioInfo.containsKey("author"))
+			{
+				return (String) audioInfo.get("author");
+			}
+		}
+		return "";
+	}
 
 	@Override
 	public void opened(Object arg0, Map properties) 
 	{
 		audioInfo = properties;
+//		for(Object key : properties.keySet())
+//		{
+//			System.out.println(key);
+//		}
 	}
 
 	@Override

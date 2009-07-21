@@ -61,17 +61,19 @@ public class JPowerHourCmdLine
 				}
 				else
 				{
-					PowerHourSong song = new PowerHourSong(f);
-					song.setPlayLength(songLength);
+					
 					try
 					{
+						PowerHourSong song = new PowerHourSong(f);
+						song.setPlayLength(songLength);
 						song.setStartPos(mins, sec);
+						songsToPlay.add(song);
 					}
 					catch(BasicPlayerException bpe)
 					{
 						//do nothing
 					}
-					songsToPlay.add(song);
+					
 				}
 			}
 		}

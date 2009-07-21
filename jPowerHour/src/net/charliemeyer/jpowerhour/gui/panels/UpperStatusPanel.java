@@ -1,4 +1,4 @@
-package net.charliemeyer.jpowerhour.gui;
+package net.charliemeyer.jpowerhour.gui.panels;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+import net.charliemeyer.jpowerhour.gui.JPowerHourGUI;
+
 public class UpperStatusPanel extends JPanel 
 {
 	private ArrayList<String> texts;
@@ -16,7 +18,7 @@ public class UpperStatusPanel extends JPanel
 	private JLabel lowerRight;
 	private JProgressBar progress;
 	
-	public UpperStatusPanel()
+	public UpperStatusPanel(JPowerHourGUI parent)
 	{
 		super();
 		setLayout(new GridLayout(2,1));

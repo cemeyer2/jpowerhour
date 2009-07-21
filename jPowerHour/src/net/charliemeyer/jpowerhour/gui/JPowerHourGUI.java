@@ -11,6 +11,13 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import javazoom.jlgui.basicplayer.BasicPlayerException;
+
+import net.charliemeyer.jpowerhour.PowerHourSong;
+import net.charliemeyer.jpowerhour.gui.panels.LowerButtonPanel;
+import net.charliemeyer.jpowerhour.gui.panels.SongListPanel;
+import net.charliemeyer.jpowerhour.gui.panels.UpperStatusPanel;
+
 public class JPowerHourGUI 
 {
 	private JFrame frame;
@@ -33,11 +40,11 @@ public class JPowerHourGUI
 		panel = new JPanel();
 		Dimension dim = new Dimension(GUI_WIDTH, GUI_HEIGHT);
 		
-		songListPanel = new SongListPanel();
+		songListPanel = new SongListPanel(this);
 		
-		lowerButtonPanel = new LowerButtonPanel();
+		lowerButtonPanel = new LowerButtonPanel(this);
 		
-		upperStatusPanel = new UpperStatusPanel();
+		upperStatusPanel = new UpperStatusPanel(this);
 		
 		
 		panel.setLayout(new BorderLayout());
@@ -85,6 +92,37 @@ public class JPowerHourGUI
 	public void show()
 	{
 		frame.setVisible(true);
+	}
+	
+	public SongListPanel getSongListPanel()
+	{
+		return songListPanel;
+	}
+	
+	public UpperStatusPanel getUpperStatusPanel()
+	{
+		return upperStatusPanel;
+	}
+	
+	public LowerButtonPanel getLowerButtonPanel()
+	{
+		return lowerButtonPanel;
+	}
+	
+	public void runPowerHour()
+	{
+		for(int i = 0; i < songListPanel.getPowerHourSongCount(); i++)
+		{
+			PowerHourSong song = songListPanel.getPowerHourSong(i);
+			try 
+			{
+				song.playSong();
+			} 
+			catch (BasicPlayerException e) 
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException

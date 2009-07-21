@@ -9,27 +9,33 @@ public class PowerHourSong
 	private long startTime;
 	private File songFile;
 	private int playLength;
+	private long durationMs;
+	private String artist, title;
 	
-	public PowerHourSong(File songFile)
+	public PowerHourSong(File songFile) throws BasicPlayerException
 	{
 		this.songFile = songFile;
 		this.startTime = 0;
 		this.playLength = 60;
+		
+		JPowerHourPlayer player = JPowerHourPlayer.getJPowerHourPlayer();
+		player.stop();
+		player.openFile(songFile);
+		durationMs = player.getSongLengthInMs();
+		artist = player.getArtist();
+		title = player.getTitle();
 	}
 	
 	public void setStartPos(int mins, int sec) throws BasicPlayerException
 	{
 		long ms = (60*mins+sec)*1000;
-		JPowerHourPlayer player = JPowerHourPlayer.getJPowerHourPlayer();
-		player.stop();
-		player.openFile(songFile);
-		long songMs = player.getSongLengthInMs();
+		
 		long lengthMs = playLength * 1000;
 		//if the requested starting position doesnt leave enough room to play the requested length
 		//move the starting pos back playLength number of ms from the end of the song
-		if(ms+lengthMs > songMs)
+		if(ms+lengthMs > durationMs)
 		{
-			ms = songMs - lengthMs;
+			ms = durationMs - lengthMs;
 		}
 		startTime = ms;
 	}
@@ -50,5 +56,10 @@ public class PowerHourSong
 		player.openFile(songFile);
 		player.seek(startTime);
 		player.play(playLength);
+	}
+	
+	public String toString()
+	{
+		return artist+" - "+title;
 	}
 }
