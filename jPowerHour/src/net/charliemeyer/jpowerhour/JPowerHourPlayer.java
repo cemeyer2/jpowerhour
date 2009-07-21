@@ -11,6 +11,15 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 public class JPowerHourPlayer implements BasicPlayerListener
 {
+	private static JPowerHourPlayer jPowerHourPlayer;
+	
+	//singleton pattern
+	public static JPowerHourPlayer getJPowerHourPlayer()
+	{
+		if(jPowerHourPlayer == null)
+			jPowerHourPlayer = new JPowerHourPlayer();
+		return jPowerHourPlayer;
+	}
 	
 	private BasicPlayer player;
 	private Map audioInfo;
@@ -108,10 +117,20 @@ public class JPowerHourPlayer implements BasicPlayerListener
 		player.stop();
 	}
 	
+	public void stop() throws BasicPlayerException
+	{
+		player.stop();
+	}
+	
 	public void seek(int mins, int sec) throws BasicPlayerException
 	{
 		sec += 60*mins;
 		long ms = 1000*sec;
+		seek(ms);
+	}
+	
+	public void seek(long ms) throws BasicPlayerException
+	{
 		if(ms > this.getSongLengthInMs())
 			return;
 		else
@@ -123,7 +142,6 @@ public class JPowerHourPlayer implements BasicPlayerListener
                 player.seek(skipBytes);
             }
 		}
-			
 	}
 
 	@Override

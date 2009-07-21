@@ -9,20 +9,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
-
 import net.charliemeyer.jpowerhour.JPowerHourPlayer;
+import net.charliemeyer.jpowerhour.PowerHourSong;
 
 public class JPowerHourCmdLine 
 {
 	File playlistFile;
 	int songLength;
-	ArrayList<File> songsToPlay;
+	ArrayList<PowerHourSong> songsToPlay;
 	
 	public JPowerHourCmdLine(File playlistFile, int songLength)
 	{
 		this.playlistFile = playlistFile;
 		this.songLength = songLength;
-		songsToPlay = new ArrayList<File>();
+		songsToPlay = new ArrayList<PowerHourSong>();
 		initSongsList();
 		runPowerHour();
 	}
@@ -49,7 +49,11 @@ public class JPowerHourCmdLine
 					System.err.println("Error, "+path+" does not exist, not adding to power hour");
 				}
 				else
-					songsToPlay.add(f);
+				{
+					PowerHourSong song = new PowerHourSong(f);
+					song.setPlayLength(songLength);
+					songsToPlay.add(song);
+				}
 			}
 		}
 		catch(IOException ioe)
@@ -61,15 +65,13 @@ public class JPowerHourCmdLine
 	
 	private void runPowerHour()
 	{
-		JPowerHourPlayer player = new JPowerHourPlayer();
 		for(int songNumber = 0; songNumber < songsToPlay.size(); songNumber++)
 		{
-			File f = songsToPlay.get(songNumber);
+			PowerHourSong song = songsToPlay.get(songNumber);
 			System.out.println("Playing song "+(songNumber+1)+" of "+songsToPlay.size());
 			try
 			{
-				player.openFile(f);
-				player.play(songLength);
+				song.playSong();
 			}
 			catch(BasicPlayerException bpe)
 			{
@@ -101,16 +103,17 @@ public class JPowerHourCmdLine
             System.exit(2);
         }
         
-        Integer lengthValue = (Integer)parser.getOptionValue(lengthOption, new Integer(10));
+        Integer lengthValue = (Integer)parser.getOptionValue(lengthOption, new Integer(20));
         int length = lengthValue.intValue();
         
-        String playlist = (String)parser.getOptionValue(playlistOption, "jPowerHour.lst");
+        String playlist = (String)parser.getOptionValue(playlistOption, "jPowerHour.jph");
         
         File playlistFile = new File(playlist);
         if(!playlistFile.exists())
         {
         	String path = playlist;
-        	try {
+        	try 
+        	{
 				path = playlistFile.getCanonicalPath();
 			} 
         	catch (IOException e) 
