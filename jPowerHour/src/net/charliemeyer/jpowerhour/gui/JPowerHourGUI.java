@@ -1,20 +1,55 @@
 package net.charliemeyer.jpowerhour.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class JPowerHourGUI 
 {
-	JFrame frame;
+	private JFrame frame;
+	private JPanel panel;
+	private SongListPanel songListPanel;
+	private LowerButtonPanel lowerButtonPanel;
+	private UpperStatusPanel upperStatusPanel;
+	
+	private final int GUI_WIDTH = 400;
+	private final int GUI_HEIGHT = 800;
+	
+	
 	
 	public JPowerHourGUI()
 	{
 		frame = new JFrame("jPowerHour");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		frame.setJMenuBar(initializeMenuBar());
+		panel = new JPanel();
+		Dimension dim = new Dimension(GUI_WIDTH, GUI_HEIGHT);
+		
+		songListPanel = new SongListPanel();
+		
+		lowerButtonPanel = new LowerButtonPanel();
+		
+		upperStatusPanel = new UpperStatusPanel();
+		
+		
+		panel.setLayout(new BorderLayout());
+		panel.add(upperStatusPanel, BorderLayout.NORTH);
+		panel.add(songListPanel, BorderLayout.CENTER);
+		panel.add(lowerButtonPanel, BorderLayout.SOUTH);
+		
+		panel.setSize(dim);
+		frame.setContentPane(panel);
+		frame.setSize(dim);
+		
+		
 	}
 	
 	private JMenuBar initializeMenuBar()
@@ -22,13 +57,27 @@ public class JPowerHourGUI
 		JMenuBar menubar = new JMenuBar();
 		
 		JMenu file = new JMenu("File");
-		JMenuItem about = new JMenuItem("About");
 		JMenuItem quit = new JMenuItem("Quit");
-		file.add(about);
+		JMenuItem open = new JMenuItem("Open");
+		JMenuItem openItunes = new JMenuItem("Open iTunes Playlist");
+		JMenuItem save = new JMenuItem("Save");
+		JMenuItem saveAs = new JMenuItem("Save As");
+		
+		file.add(open);
+		file.add(openItunes);
+		file.add(save);
+		file.add(saveAs);
 		file.addSeparator();
 		file.add(quit);
-		
 		menubar.add(file);
+		
+		JMenu help = new JMenu("Help");
+		JMenuItem onlineHelp = new JMenuItem("Online Help");
+		JMenuItem about = new JMenuItem("About");
+		
+		help.add(onlineHelp);
+		help.add(about);
+		menubar.add(help);
 		
 		return menubar;
 	}
