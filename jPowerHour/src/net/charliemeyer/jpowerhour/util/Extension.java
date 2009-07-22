@@ -7,6 +7,7 @@ public class Extension
 
 	public final static String mp3 = "mp3";
 	public final static String wav = "wav";
+	public final static String jph = "jph";
 
 	/*
 	 * Get the extension of a file.

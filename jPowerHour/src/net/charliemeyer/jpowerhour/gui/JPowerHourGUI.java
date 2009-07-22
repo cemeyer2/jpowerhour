@@ -3,6 +3,8 @@ package net.charliemeyer.jpowerhour.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ import net.charliemeyer.jpowerhour.gui.panels.LowerButtonPanel;
 import net.charliemeyer.jpowerhour.gui.panels.SongListPanel;
 import net.charliemeyer.jpowerhour.gui.panels.UpperStatusPanel;
 
-public class JPowerHourGUI 
+public class JPowerHourGUI implements ActionListener
 {
 	private JFrame frame;
 	private JPanel panel;
@@ -34,7 +36,7 @@ public class JPowerHourGUI
 	private final int GUI_WIDTH = 400;
 	private final int GUI_HEIGHT = 800;
 	
-	
+	private JMenuItem quit,open,openItunes,save,saveAs,onlineHelp,about;
 	
 	public JPowerHourGUI()
 	{
@@ -86,11 +88,17 @@ public class JPowerHourGUI
 		JMenuBar menubar = new JMenuBar();
 		
 		JMenu file = new JMenu("File");
-		JMenuItem quit = new JMenuItem("Quit");
-		JMenuItem open = new JMenuItem("Open");
-		JMenuItem openItunes = new JMenuItem("Open iTunes Playlist");
-		JMenuItem save = new JMenuItem("Save");
-		JMenuItem saveAs = new JMenuItem("Save As");
+		quit = new JMenuItem("Quit");
+		open = new JMenuItem("Open");
+		openItunes = new JMenuItem("Open iTunes Playlist");
+		save = new JMenuItem("Save");
+		saveAs = new JMenuItem("Save As");
+		
+		quit.addActionListener(this);
+		open.addActionListener(this);
+		openItunes.addActionListener(this);
+		save.addActionListener(this);
+		saveAs.addActionListener(this);
 		
 		file.add(open);
 		file.add(openItunes);
@@ -101,8 +109,11 @@ public class JPowerHourGUI
 		menubar.add(file);
 		
 		JMenu help = new JMenu("Help");
-		JMenuItem onlineHelp = new JMenuItem("Online Help");
-		JMenuItem about = new JMenuItem("About");
+		onlineHelp = new JMenuItem("Online Help");
+		about = new JMenuItem("About");
+		
+		onlineHelp.addActionListener(this);
+		about.addActionListener(this);
 		
 		help.add(onlineHelp);
 		help.add(about);
@@ -154,5 +165,75 @@ public class JPowerHourGUI
 
 		JPowerHourGUI gui = new JPowerHourGUI();
 		gui.show();
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event) 
+	{
+		Object source = event.getSource();
+		if(quit.equals(source))
+		{
+			handleQuitAction();
+		}
+		else if(open.equals(source))
+		{
+			handleOpenAction();
+		}
+		else if(openItunes.equals(source))
+		{
+			handleOpenItunesAction();
+		}
+		else if(save.equals(source))
+		{
+			handleSaveAction();
+		}
+		else if(saveAs.equals(source))
+		{
+			handleSaveAsAction();
+		}
+		else if(onlineHelp.equals(source))
+		{
+			handleOnlineHelpAction();
+		}
+		else if(about.equals(source))
+		{
+			handleAboutAction();
+		}
+	}
+
+	private void handleAboutAction() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void handleOnlineHelpAction() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void handleSaveAsAction() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void handleSaveAction() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void handleOpenItunesAction() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void handleOpenAction() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void handleQuitAction() 
+	{
+		frame.setVisible(false);
+		System.exit(0);		
 	}
 }
