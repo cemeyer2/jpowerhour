@@ -139,4 +139,9 @@ public class JPowerHourSong implements BasicPlayerListener
 	{
 		return durationMs;
 	}
+	
+	public File getSongFile()
+	{
+		return songFile;
+	}
 }

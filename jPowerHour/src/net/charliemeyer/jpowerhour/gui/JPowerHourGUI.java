@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -23,6 +24,11 @@ import net.charliemeyer.jpowerhour.PowerHourThread;
 import net.charliemeyer.jpowerhour.gui.panels.LowerButtonPanel;
 import net.charliemeyer.jpowerhour.gui.panels.SongListPanel;
 import net.charliemeyer.jpowerhour.gui.panels.UpperStatusPanel;
+import net.charliemeyer.jpowerhour.gui.util.JPowerHourPlaylistFilter;
+import net.charliemeyer.jpowerhour.util.xml.LoadPlaylist;
+import net.charliemeyer.jpowerhour.util.xml.SavePlaylist;
+
+import org.jdom.JDOMException;
 
 public class JPowerHourGUI implements ActionListener
 {
@@ -32,6 +38,7 @@ public class JPowerHourGUI implements ActionListener
 	private LowerButtonPanel lowerButtonPanel;
 	private UpperStatusPanel upperStatusPanel;
 	private PowerHourThread thread;
+	private File currentlyLoadedFile;
 	
 	private final int GUI_WIDTH = 400;
 	private final int GUI_HEIGHT = 800;
@@ -216,14 +223,53 @@ public class JPowerHourGUI implements ActionListener
 		
 	}
 
-	private void handleSaveAsAction() {
-		// TODO Auto-generated method stub
-		
+	private void handleSaveAsAction() 
+	{
+		ArrayList<JPowerHourSong> songs = new ArrayList<JPowerHourSong>();
+		for(int i = 0; i < getSongListPanel().getPowerHourSongCount(); i++)
+		{
+			songs.add(getSongListPanel().getPowerHourSong(i));
+		}
+		JFileChooser chooser = new JFileChooser();		
+		chooser.setFileFilter(new JPowerHourPlaylistFilter());
+		int retval = chooser.showSaveDialog(frame);
+
+        if (retval == JFileChooser.APPROVE_OPTION) 
+        {
+            File file = chooser.getSelectedFile();
+            try 
+            {
+				SavePlaylist.savePlaylist(songs, file);
+			} 
+            catch (IOException e) 
+            {
+				e.printStackTrace();
+			}
+        }		
 	}
 
-	private void handleSaveAction() {
-		// TODO Auto-generated method stub
-		
+	private void handleSaveAction() 
+	{
+		if(currentlyLoadedFile == null)
+		{
+			handleSaveAsAction();
+		}
+		else
+		{
+			ArrayList<JPowerHourSong> songs = new ArrayList<JPowerHourSong>();
+			for(int i = 0; i < getSongListPanel().getPowerHourSongCount(); i++)
+			{
+				songs.add(getSongListPanel().getPowerHourSong(i));
+			}
+			try 
+			{
+				SavePlaylist.savePlaylist(songs, currentlyLoadedFile);
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private void handleOpenItunesAction() {
@@ -231,9 +277,34 @@ public class JPowerHourGUI implements ActionListener
 		
 	}
 
-	private void handleOpenAction() {
-		// TODO Auto-generated method stub
-		
+	private void handleOpenAction() 
+	{
+		JFileChooser chooser = new JFileChooser();		
+		chooser.setFileFilter(new JPowerHourPlaylistFilter());
+		int retval = chooser.showOpenDialog(frame);
+
+        if (retval == JFileChooser.APPROVE_OPTION) 
+        {
+            File file = chooser.getSelectedFile();
+            try 
+            {
+				ArrayList<JPowerHourSong> songs = LoadPlaylist.loadPlaylist(file);
+				songListPanel.clearSongs();
+				for(JPowerHourSong song : songs)
+				{
+					songListPanel.addPowerHourSong(song);
+				}
+				currentlyLoadedFile = file;
+			} 
+            catch (IOException e) 
+            {
+				e.printStackTrace();
+			} 
+            catch (JDOMException e) 
+			{
+				e.printStackTrace();
+			}
+        }
 	}
 
 	private void handleQuitAction() 

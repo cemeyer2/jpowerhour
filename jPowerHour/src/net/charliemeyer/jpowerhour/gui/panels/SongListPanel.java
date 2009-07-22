@@ -87,6 +87,11 @@ public class SongListPanel extends JPanel implements MouseListener
 			list.setSelectedIndex(index+1);
 		}
 	}
+	
+	public void clearSongs()
+	{
+		listModel.clear();
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent event) 
