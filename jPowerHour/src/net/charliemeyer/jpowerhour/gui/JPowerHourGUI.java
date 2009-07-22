@@ -107,6 +107,8 @@ public class JPowerHourGUI implements ActionListener
 		save.addActionListener(this);
 		saveAs.addActionListener(this);
 		
+		openItunes.setEnabled(false);
+		
 		file.add(open);
 		file.add(openItunes);
 		file.add(save);
