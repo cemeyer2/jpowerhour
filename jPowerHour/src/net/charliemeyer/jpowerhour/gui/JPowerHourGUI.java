@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import net.charliemeyer.jpowerhour.PowerHourSong;
+import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.PowerHourThread;
 import net.charliemeyer.jpowerhour.gui.panels.LowerButtonPanel;
 import net.charliemeyer.jpowerhour.gui.panels.SongListPanel;
@@ -149,7 +149,7 @@ public class JPowerHourGUI implements ActionListener
 	
 	public void runPowerHour()
 	{
-		ArrayList<PowerHourSong> songs = new ArrayList<PowerHourSong>();
+		ArrayList<JPowerHourSong> songs = new ArrayList<JPowerHourSong>();
 		for(int i = 0; i < getSongListPanel().getPowerHourSongCount(); i++)
 		{
 			songs.add(getSongListPanel().getPowerHourSong(i));

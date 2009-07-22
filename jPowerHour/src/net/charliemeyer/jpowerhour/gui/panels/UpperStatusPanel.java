@@ -13,18 +13,18 @@ import javazoom.jlgui.basicplayer.BasicController;
 import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 import net.charliemeyer.jpowerhour.JPowerHourPlayer;
-import net.charliemeyer.jpowerhour.PowerHourListener;
-import net.charliemeyer.jpowerhour.PowerHourSong;
+import net.charliemeyer.jpowerhour.JPowerHourListener;
+import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.gui.JPowerHourGUI;
 
-public class UpperStatusPanel extends JPanel implements BasicPlayerListener, PowerHourListener
+public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPowerHourListener
 {
 	private ArrayList<String> texts;
 	private JLabel upperLabel;
 	private JLabel lowerLeft;
 	private JLabel lowerRight;
 	private JProgressBar progress;
-	private PowerHourSong currentlyPlayingSong;
+	private JPowerHourSong currentlyPlayingSong;
 	
 	public UpperStatusPanel(JPowerHourGUI parent)
 	{
@@ -131,7 +131,7 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, Pow
 	}
 
 	@Override
-	public void songChange(PowerHourSong currentlyPlaying, int currentlyPlayingNumber) 
+	public void songChange(JPowerHourSong currentlyPlaying, int currentlyPlayingNumber) 
 	{
 		currentlyPlayingSong = currentlyPlaying;
 		long start = currentlyPlaying.getStartTime();

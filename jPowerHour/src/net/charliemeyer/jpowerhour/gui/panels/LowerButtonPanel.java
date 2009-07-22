@@ -13,9 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
+import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 
-import net.charliemeyer.jpowerhour.PowerHourSong;
+import net.charliemeyer.jpowerhour.JPowerHourPlayer;
+import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.gui.JPowerHourGUI;
 import net.charliemeyer.jpowerhour.gui.util.MusicFilter;
 
@@ -135,7 +137,7 @@ public class LowerButtonPanel extends JPanel implements ActionListener
             File file = chooser.getSelectedFile();
             try
             {
-            	PowerHourSong song = new PowerHourSong(file);
+            	JPowerHourSong song = new JPowerHourSong(file);
             	this.songListPanel.addPowerHourSong(song);
             }
             catch(BasicPlayerException bpe)
@@ -150,14 +152,35 @@ public class LowerButtonPanel extends JPanel implements ActionListener
 
 	}
 
-	private void handlePauseAction() {
-		// TODO Auto-generated method stub
-		
+	private void handlePauseAction() 
+	{
+		int status = JPowerHourPlayer.getJPowerHourPlayer().getBasicPlayerStatus();
+		if(status == BasicPlayer.PLAYING)
+		{
+			try 
+			{
+				JPowerHourPlayer.getJPowerHourPlayer().pause();
+			} 
+			catch (BasicPlayerException e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		else if(status == BasicPlayer.PAUSED)
+		{
+			try 
+			{
+				JPowerHourPlayer.getJPowerHourPlayer().resume();
+			} 
+			catch (BasicPlayerException e) 
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private void handleStopAction() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void handlePlayAction() {

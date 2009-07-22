@@ -6,23 +6,23 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 
 public class PowerHourThread implements Runnable 
 {
-	private ArrayList<PowerHourSong> songs;
+	private ArrayList<JPowerHourSong> songs;
 	private int currentlyPlayingSong = 0;
-	private ArrayList<PowerHourListener> listeners;
-	private PowerHourSong currentlyPlaying;
+	private ArrayList<JPowerHourListener> listeners;
+	private JPowerHourSong currentlyPlaying;
 	
 	public PowerHourThread()
 	{
-		this.songs = new ArrayList<PowerHourSong>();
-		listeners = new ArrayList<PowerHourListener>();
+		this.songs = new ArrayList<JPowerHourSong>();
+		listeners = new ArrayList<JPowerHourListener>();
 	}
 	
-	public void addPowerHourListener(PowerHourListener listener)
+	public void addPowerHourListener(JPowerHourListener listener)
 	{
 		listeners.add(listener);
 	}
 	
-	public void setSongs(ArrayList<PowerHourSong> songs)
+	public void setSongs(ArrayList<JPowerHourSong> songs)
 	{
 		this.songs = songs;
 	}
@@ -32,10 +32,10 @@ public class PowerHourThread implements Runnable
 	{
 		for(int i = 0; i < songs.size(); i++)
 		{
-			PowerHourSong song = songs.get(i);
+			JPowerHourSong song = songs.get(i);
 			currentlyPlayingSong = i;
 			currentlyPlaying = song;
-			for(PowerHourListener listener : listeners)
+			for(JPowerHourListener listener : listeners)
 			{
 				listener.songChange(song, i);
 			}
@@ -53,7 +53,7 @@ public class PowerHourThread implements Runnable
 	
 	public void pause()
 	{
-		for(PowerHourListener listener : listeners)
+		for(JPowerHourListener listener : listeners)
 		{
 			listener.paused();
 		}
@@ -69,7 +69,7 @@ public class PowerHourThread implements Runnable
 	
 	public void resume()
 	{
-		for(PowerHourListener listener : listeners)
+		for(JPowerHourListener listener : listeners)
 		{
 			listener.resumed();
 		}

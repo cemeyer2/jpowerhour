@@ -10,19 +10,19 @@ import java.util.ArrayList;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import net.charliemeyer.jpowerhour.JPowerHourPlayer;
-import net.charliemeyer.jpowerhour.PowerHourSong;
+import net.charliemeyer.jpowerhour.JPowerHourSong;
 
 public class JPowerHourCmdLine 
 {
 	File playlistFile;
 	int songLength;
-	ArrayList<PowerHourSong> songsToPlay;
+	ArrayList<JPowerHourSong> songsToPlay;
 	
 	public JPowerHourCmdLine(File playlistFile, int songLength)
 	{
 		this.playlistFile = playlistFile;
 		this.songLength = songLength;
-		songsToPlay = new ArrayList<PowerHourSong>();
+		songsToPlay = new ArrayList<JPowerHourSong>();
 		initSongsList();
 	}
 	
@@ -64,7 +64,7 @@ public class JPowerHourCmdLine
 					
 					try
 					{
-						PowerHourSong song = new PowerHourSong(f);
+						JPowerHourSong song = new JPowerHourSong(f);
 						song.setPlayLength(songLength);
 						song.setStartPos(mins, sec);
 						songsToPlay.add(song);
@@ -88,7 +88,7 @@ public class JPowerHourCmdLine
 	{
 		for(int songNumber = 0; songNumber < songsToPlay.size(); songNumber++)
 		{
-			PowerHourSong song = songsToPlay.get(songNumber);
+			JPowerHourSong song = songsToPlay.get(songNumber);
 			System.out.println("Playing song "+(songNumber+1)+" of "+songsToPlay.size());
 			try
 			{

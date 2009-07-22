@@ -1,22 +1,29 @@
 package net.charliemeyer.jpowerhour;
 
 import java.io.File;
+import java.util.Map;
 
+import javazoom.jlgui.basicplayer.BasicController;
+import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
-public class PowerHourSong 
+public class JPowerHourSong implements BasicPlayerListener
 {
 	private long startTime;
 	private File songFile;
 	private int playLength;
 	private long durationMs;
 	private String artist, title;
+	Object lock;
 	
-	public PowerHourSong(File songFile) throws BasicPlayerException
+	public JPowerHourSong(File songFile) throws BasicPlayerException
 	{
+		lock = new Object();
+		
 		this.songFile = songFile;
 		this.startTime = 0;
-		this.playLength = 60;
+		this.playLength = 10;
 		
 		JPowerHourPlayer player = JPowerHourPlayer.getJPowerHourPlayer();
 		player.stop();
@@ -52,10 +59,24 @@ public class PowerHourSong
 	public void playSong() throws BasicPlayerException
 	{
 		JPowerHourPlayer player = JPowerHourPlayer.getJPowerHourPlayer();
+		player.addBasicPlayerListener(this);
 		player.stop();
 		player.openFile(songFile);
 		player.seek(startTime);
-		player.play(playLength);
+		player.play();
+		try 
+		{
+			synchronized(lock)
+			{
+				lock.wait();
+			}
+		} 
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+		}
+		player.stop();
+		player.removeBasicPlayerListener(this);
 	}
 	
 	public String toString()
@@ -81,5 +102,31 @@ public class PowerHourSong
 	public long getStartTime()
 	{
 		return startTime;
+	}
+
+	@Override
+	public void opened(Object arg0, Map arg1) {
+		
+	}
+
+	@Override
+	public void progress(int arg0, long microseconds, byte[] arg2, Map arg3) {
+		if(microseconds/1000 >= playLength*1000)
+		{
+			synchronized(lock)
+			{
+				lock.notify();
+			}
+		}
+	}
+
+	@Override
+	public void setController(BasicController arg0) {
+		
+	}
+
+	@Override
+	public void stateUpdated(BasicPlayerEvent arg0) {
+		
 	}
 }

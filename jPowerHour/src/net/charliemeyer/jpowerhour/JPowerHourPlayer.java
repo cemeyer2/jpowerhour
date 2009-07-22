@@ -108,6 +108,11 @@ public class JPowerHourPlayer implements BasicPlayerListener
 		player.pause();
 	}
 	
+	public void resume() throws BasicPlayerException
+	{
+		player.resume();
+	}
+	
 	public void play(int seconds) throws BasicPlayerException
 	{
 		player.play();
@@ -204,5 +209,15 @@ public class JPowerHourPlayer implements BasicPlayerListener
 	public void addBasicPlayerListener(BasicPlayerListener listener)
 	{
 		player.addBasicPlayerListener(listener);
+	}
+	
+	public void removeBasicPlayerListener(BasicPlayerListener listener)
+	{
+		player.removeBasicPlayerListener(listener);
+	}
+	
+	public int getBasicPlayerStatus()
+	{
+		return player.getStatus();
 	}
 }

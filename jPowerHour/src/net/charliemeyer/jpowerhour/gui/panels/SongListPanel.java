@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import net.charliemeyer.jpowerhour.PowerHourSong;
+import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.gui.JPowerHourGUI;
 import net.charliemeyer.jpowerhour.gui.util.SongListRenderer;
 
@@ -34,7 +34,7 @@ public class SongListPanel extends JPanel
 		add(scrollPane, BorderLayout.CENTER);
 	}
 	
-	public void addPowerHourSong(PowerHourSong song)
+	public void addPowerHourSong(JPowerHourSong song)
 	{
 		listModel.addElement(song);
 	}
@@ -44,14 +44,19 @@ public class SongListPanel extends JPanel
 		return listModel.size();
 	}
 	
-	public PowerHourSong getPowerHourSong(int index)
+	public JPowerHourSong getPowerHourSong(int index)
 	{
-		return (PowerHourSong)listModel.get(index);
+		int size = listModel.size();
+		if(index >= 0 && index < size)
+			return (JPowerHourSong)listModel.get(index);
+		else
+			return null;
 	}
 	
 	public void removePowerHourSong()
 	{
-		listModel.remove(list.getSelectedIndex());
+		if(list.getSelectedIndex() != -1)
+			listModel.remove(list.getSelectedIndex());
 	}
 	
 	public void up()
@@ -70,7 +75,7 @@ public class SongListPanel extends JPanel
 	public void down()
 	{
 		int index = list.getSelectedIndex();
-		if(index >= 0 && listModel.size() > 1 && index < listModel.size())
+		if(index >= 0 && index < listModel.size()-1)
 		{
 			Object a = listModel.get(index+1);
 			Object b = listModel.get(index);
