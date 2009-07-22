@@ -24,11 +24,13 @@ public class LowerButtonPanel extends JPanel implements ActionListener
 	private JButton play, pause, stop, add, remove, up, down;
 	
 	private SongListPanel songListPanel;
+	private JPowerHourGUI parent;
 	
 	public LowerButtonPanel(JPowerHourGUI parent)
 	{
 		super();
 		
+		this.parent = parent;
 		this.songListPanel = parent.getSongListPanel();
 		
 		setLayout(new GridLayout(1,7));
@@ -110,18 +112,16 @@ public class LowerButtonPanel extends JPanel implements ActionListener
 	}
 
 	private void handleDownAction() {
-		// TODO Auto-generated method stub
-		
+		songListPanel.down();
 	}
 
 	private void handleUpAction() {
-		// TODO Auto-generated method stub
+		songListPanel.up();
 		
 	}
 
 	private void handleRemoveAction() {
-		// TODO Auto-generated method stub
-		
+		songListPanel.removePowerHourSong();		
 	}
 
 	private void handleAddAction() 
@@ -161,7 +161,7 @@ public class LowerButtonPanel extends JPanel implements ActionListener
 	}
 
 	private void handlePlayAction() {
-		// TODO Auto-generated method stub
+		parent.runPowerHour();
 		
 	}
 }
