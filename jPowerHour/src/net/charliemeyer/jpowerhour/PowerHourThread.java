@@ -3,6 +3,7 @@ package net.charliemeyer.jpowerhour;
 import java.util.ArrayList;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
+import net.charliemeyer.jpowerhour.player.JPowerHourPlayer;
 
 public class PowerHourThread implements Runnable 
 {
@@ -10,16 +11,39 @@ public class PowerHourThread implements Runnable
 	private int currentlyPlayingSong = 0;
 	private ArrayList<JPowerHourListener> listeners;
 	private JPowerHourSong currentlyPlaying;
+	private ArrayList<JPowerHourPlayer> players;
 	
 	public PowerHourThread()
 	{
 		this.songs = new ArrayList<JPowerHourSong>();
 		listeners = new ArrayList<JPowerHourListener>();
+		players = new ArrayList<JPowerHourPlayer>();
 	}
 	
 	public void addPowerHourListener(JPowerHourListener listener)
 	{
 		listeners.add(listener);
+	}
+	
+	public void addPlayer(JPowerHourPlayer player)
+	{
+		players.add(player);
+		this.addPowerHourListener(player);
+	}
+	
+	public ArrayList<JPowerHourPlayer> getPlayers()
+	{
+		return players;
+	}
+	
+	public void clearPlayers()
+	{
+		players.clear();
+	}
+	
+	public boolean removePlayer(JPowerHourPlayer player)
+	{
+		return players.remove(player);
 	}
 	
 	public void setSongs(ArrayList<JPowerHourSong> songs)
@@ -30,6 +54,10 @@ public class PowerHourThread implements Runnable
 	@Override
 	public void run() 
 	{
+		for(JPowerHourListener listener : listeners)
+		{
+			listener.powerHourStarted();
+		}
 		for(int i = 0; i < songs.size(); i++)
 		{
 			JPowerHourSong song = songs.get(i);
@@ -51,7 +79,7 @@ public class PowerHourThread implements Runnable
 		}
 		for(JPowerHourListener listener : listeners)
 		{
-			listener.finished();
+			listener.powerHourFinished();
 		}
 	}
 	
@@ -59,7 +87,7 @@ public class PowerHourThread implements Runnable
 	{
 		try 
 		{
-			JPowerHourPlayer.getJPowerHourPlayer().stop();
+			JPowerHourAudioPlayer.getJPowerHourPlayer().stop();
 		} 
 		catch (BasicPlayerException e) 
 		{
@@ -67,7 +95,7 @@ public class PowerHourThread implements Runnable
 		}
 		for(JPowerHourListener listener : listeners)
 		{
-			listener.finished();
+			listener.powerHourFinished();
 		}
 	}
 	
@@ -75,11 +103,11 @@ public class PowerHourThread implements Runnable
 	{
 		for(JPowerHourListener listener : listeners)
 		{
-			listener.paused();
+			listener.powerHourPaused();
 		}
 		try 
 		{
-			JPowerHourPlayer.getJPowerHourPlayer().pause();
+			JPowerHourAudioPlayer.getJPowerHourPlayer().pause();
 		} 
 		catch (BasicPlayerException e) 
 		{
@@ -91,11 +119,11 @@ public class PowerHourThread implements Runnable
 	{
 		for(JPowerHourListener listener : listeners)
 		{
-			listener.resumed();
+			listener.powerHourResumed();
 		}
 		try
 		{
-			JPowerHourPlayer.getJPowerHourPlayer().resume();
+			JPowerHourAudioPlayer.getJPowerHourPlayer().resume();
 		}
 		catch(BasicPlayerException bpe)
 		{

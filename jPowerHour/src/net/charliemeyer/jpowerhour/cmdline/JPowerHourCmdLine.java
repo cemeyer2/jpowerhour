@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
-import net.charliemeyer.jpowerhour.JPowerHourPlayer;
+import net.charliemeyer.jpowerhour.JPowerHourAudioPlayer;
 import net.charliemeyer.jpowerhour.JPowerHourSong;
 
 public class JPowerHourCmdLine 

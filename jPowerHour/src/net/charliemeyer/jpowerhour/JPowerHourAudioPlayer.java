@@ -9,15 +9,15 @@ import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
-public class JPowerHourPlayer implements BasicPlayerListener
+public class JPowerHourAudioPlayer implements BasicPlayerListener
 {
-	private static JPowerHourPlayer jPowerHourPlayer;
+	private static JPowerHourAudioPlayer jPowerHourPlayer;
 	
 	//singleton pattern
-	public static JPowerHourPlayer getJPowerHourPlayer()
+	public static JPowerHourAudioPlayer getJPowerHourPlayer()
 	{
 		if(jPowerHourPlayer == null)
-			jPowerHourPlayer = new JPowerHourPlayer();
+			jPowerHourPlayer = new JPowerHourAudioPlayer();
 		return jPowerHourPlayer;
 	}
 	
@@ -25,7 +25,7 @@ public class JPowerHourPlayer implements BasicPlayerListener
 	private Map audioInfo;
 	Thread playThread;
 	
-	public JPowerHourPlayer()
+	public JPowerHourAudioPlayer()
 	{
 		player = new BasicPlayer();
 		player.addBasicPlayerListener(this);

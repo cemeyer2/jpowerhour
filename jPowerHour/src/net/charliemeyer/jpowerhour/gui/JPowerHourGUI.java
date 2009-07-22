@@ -21,10 +21,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.PowerHourThread;
+import net.charliemeyer.jpowerhour.gui.panels.AboutPanel;
 import net.charliemeyer.jpowerhour.gui.panels.LowerButtonPanel;
 import net.charliemeyer.jpowerhour.gui.panels.SongListPanel;
 import net.charliemeyer.jpowerhour.gui.panels.UpperStatusPanel;
 import net.charliemeyer.jpowerhour.gui.util.JPowerHourPlaylistFilter;
+import net.charliemeyer.jpowerhour.player.JPowerHourPlayer;
 import net.charliemeyer.jpowerhour.util.xml.LoadPlaylist;
 import net.charliemeyer.jpowerhour.util.xml.SavePlaylist;
 
@@ -96,10 +98,10 @@ public class JPowerHourGUI implements ActionListener
 		
 		JMenu file = new JMenu("File");
 		quit = new JMenuItem("Quit");
-		open = new JMenuItem("Open");
+		open = new JMenuItem("Open jPowerHour Playlist");
 		openItunes = new JMenuItem("Open iTunes Playlist");
-		save = new JMenuItem("Save");
-		saveAs = new JMenuItem("Save As");
+		save = new JMenuItem("Save Playlist");
+		saveAs = new JMenuItem("Save Playlist As");
 		
 		quit.addActionListener(this);
 		open.addActionListener(this);
@@ -163,6 +165,8 @@ public class JPowerHourGUI implements ActionListener
 	
 	public void runPowerHour()
 	{
+		JPowerHourPlayer player = new JPowerHourPlayer("Charlie", 22, true, 72, 175, 1.5, .035);
+		thread.addPlayer(player);
 		ArrayList<JPowerHourSong> songs = new ArrayList<JPowerHourSong>();
 		for(int i = 0; i < getSongListPanel().getPowerHourSongCount(); i++)
 		{
@@ -216,8 +220,8 @@ public class JPowerHourGUI implements ActionListener
 	}
 
 	private void handleAboutAction() {
-		// TODO Auto-generated method stub
-		
+		AboutPanel panel = new AboutPanel();
+		panel.show();
 	}
 
 	private void handleOnlineHelpAction() {

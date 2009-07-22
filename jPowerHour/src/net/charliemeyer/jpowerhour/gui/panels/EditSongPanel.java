@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 
@@ -32,7 +33,7 @@ public class EditSongPanel extends JPanel implements ActionListener
 	{
 		this.song = song;
 		setLayout(new GridLayout(4,1));
-		JLabel title = new JLabel(song.toString());
+		JLabel title = new JLabel(song.toString(),SwingConstants.CENTER);
 		
 		int songSeconds = (int) (song.getDurationMs()/1000d);
 		int startSeconds = (int) (song.getStartTime()/1000d);

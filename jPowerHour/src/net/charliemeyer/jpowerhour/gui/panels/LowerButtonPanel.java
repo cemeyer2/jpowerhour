@@ -15,8 +15,8 @@ import javax.swing.JPanel;
 
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
+import net.charliemeyer.jpowerhour.JPowerHourAudioPlayer;
 import net.charliemeyer.jpowerhour.JPowerHourListener;
-import net.charliemeyer.jpowerhour.JPowerHourPlayer;
 import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.gui.JPowerHourGUI;
 import net.charliemeyer.jpowerhour.gui.util.MusicFilter;
@@ -27,6 +27,7 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 	
 	private SongListPanel songListPanel;
 	private JPowerHourGUI parent;
+	private File lastOpenedFolder;
 	
 	public LowerButtonPanel(JPowerHourGUI parent)
 	{
@@ -129,13 +130,18 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 
 	private void handleAddAction() 
 	{
-		JFileChooser chooser = new JFileChooser();		
+		JFileChooser chooser = new JFileChooser();
+		if(lastOpenedFolder != null)	
+		{
+			chooser.setCurrentDirectory(lastOpenedFolder);
+		}
 		chooser.setFileFilter(new MusicFilter());
 		int retval = chooser.showOpenDialog(this);
 
         if (retval == JFileChooser.APPROVE_OPTION) 
         {
             File file = chooser.getSelectedFile();
+            lastOpenedFolder = file.getParentFile();
             try
             {
             	JPowerHourSong song = new JPowerHourSong(file);
@@ -155,7 +161,7 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 
 	private void handlePauseAction() 
 	{
-		int status = JPowerHourPlayer.getJPowerHourPlayer().getBasicPlayerStatus();
+		int status = JPowerHourAudioPlayer.getJPowerHourPlayer().getBasicPlayerStatus();
 		if(status == BasicPlayer.PLAYING)
 		{
 			parent.getPowerHourThread().pause();
@@ -182,7 +188,7 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 	}
 
 	@Override
-	public void finished() {
+	public void powerHourFinished() {
 		add.setEnabled(true);
 		remove.setEnabled(true);
 		up.setEnabled(true);
@@ -191,13 +197,13 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 	}
 
 	@Override
-	public void paused() {
+	public void powerHourPaused() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void resumed() {
+	public void powerHourResumed() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -205,6 +211,12 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 	@Override
 	public void songChange(JPowerHourSong currentlyPlaying,
 			int currentlyPlayingNumber) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void powerHourStarted() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -9,7 +9,7 @@ public class PlayerDriver
 	public static void main(String[] args) throws BasicPlayerException
 	{
 		File f = new File("secret.mp3");
-		JPowerHourPlayer player = new JPowerHourPlayer();
+		JPowerHourAudioPlayer player = new JPowerHourAudioPlayer();
 		player.openFile(f);
 		player.play(10);
 	}

@@ -12,10 +12,11 @@ import javax.swing.JProgressBar;
 import javazoom.jlgui.basicplayer.BasicController;
 import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
-import net.charliemeyer.jpowerhour.JPowerHourPlayer;
+import net.charliemeyer.jpowerhour.JPowerHourAudioPlayer;
 import net.charliemeyer.jpowerhour.JPowerHourListener;
 import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.gui.JPowerHourGUI;
+import net.charliemeyer.jpowerhour.player.JPowerHourPlayer;
 
 public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPowerHourListener
 {
@@ -25,12 +26,15 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 	private JLabel lowerRight;
 	private JProgressBar progress;
 	private JPowerHourSong currentlyPlayingSong;
+	private JPowerHourGUI parent;
 	
 	public UpperStatusPanel(JPowerHourGUI parent)
 	{
 		super();
 		
-		JPowerHourPlayer.getJPowerHourPlayer().addBasicPlayerListener(this);
+		this.parent = parent;
+		
+		JPowerHourAudioPlayer.getJPowerHourPlayer().addBasicPlayerListener(this);
 		parent.getPowerHourThread().addPowerHourListener(this);
 		
 		setLayout(new GridLayout(2,1));
@@ -61,7 +65,7 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 			{
 				while(true)
 				{
-					if(cur == texts.size())
+					if(cur >= texts.size())
 						cur = 0;
 					upperLabel.setText(texts.get(cur));
 					cur++;
@@ -122,13 +126,13 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 	}
 
 	@Override
-	public void paused() {
+	public void powerHourPaused() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void resumed() {
+	public void powerHourResumed() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -154,8 +158,16 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 		lowerLeft.setText(startStr);
 		lowerRight.setText(endStr);
 		
+		int songCount = parent.getSongListPanel().getPowerHourSongCount();
+		
 		initializeTexts();
-		texts.add("Currently Playing: "+currentlyPlayingSong.toString());
+		texts.add("Currently Playing ("+(currentlyPlayingNumber+1)+"/"+songCount+"): "+currentlyPlayingSong.toString());
+		ArrayList<JPowerHourPlayer> players = parent.getPowerHourThread().getPlayers();
+		for(JPowerHourPlayer player : players)
+		{
+			double bac = player.computeBAC();
+			texts.add("BAC for "+player.getName()+": "+bac);
+		}
 	}
 	
 	private void initializeTexts()
@@ -165,12 +177,18 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 	}
 
 	@Override
-	public void finished() {
+	public void powerHourFinished() {
 		initializeTexts();
 		texts.add("Power Hour Complete!");
 		progress.setValue(0);
 		progress.setString("Power Hour Complete!");
 		lowerLeft.setText("0:00");
 		lowerRight.setText("0:00");
+	}
+
+	@Override
+	public void powerHourStarted() {
+		// TODO Auto-generated method stub
+		
 	}
 }

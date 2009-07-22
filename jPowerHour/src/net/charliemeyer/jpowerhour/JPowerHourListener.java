@@ -4,9 +4,11 @@ public interface JPowerHourListener {
 	
 	public void songChange(JPowerHourSong currentlyPlaying, int currentlyPlayingNumber);
 	
-	public void paused();
+	public void powerHourPaused();
 	
-	public void resumed();
+	public void powerHourResumed();
 	
-	public void finished();
+	public void powerHourFinished();
+	
+	public void powerHourStarted();
 }

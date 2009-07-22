@@ -23,9 +23,9 @@ public class JPowerHourSong implements BasicPlayerListener
 		
 		this.songFile = songFile;
 		this.startTime = 0;
-		this.playLength = 10;
+		this.playLength = 60;
 		
-		JPowerHourPlayer player = JPowerHourPlayer.getJPowerHourPlayer();
+		JPowerHourAudioPlayer player = JPowerHourAudioPlayer.getJPowerHourPlayer();
 		player.stop();
 		player.openFile(songFile);
 		durationMs = player.getSongLengthInMs();
@@ -63,7 +63,7 @@ public class JPowerHourSong implements BasicPlayerListener
 	
 	public void playSong() throws BasicPlayerException
 	{
-		JPowerHourPlayer player = JPowerHourPlayer.getJPowerHourPlayer();
+		JPowerHourAudioPlayer player = JPowerHourAudioPlayer.getJPowerHourPlayer();
 		player.addBasicPlayerListener(this);
 		player.stop();
 		player.openFile(songFile);
