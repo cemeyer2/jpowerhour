@@ -62,4 +62,24 @@ public class PowerHourSong
 	{
 		return artist+" - "+title;
 	}
+	
+	public String getArtist()
+	{
+		return artist;
+	}
+	
+	public String getTitle()
+	{
+		return title;
+	}
+	
+	public int getPlayLength()
+	{
+		return playLength;
+	}
+	
+	public long getStartTime()
+	{
+		return startTime;
+	}
 }

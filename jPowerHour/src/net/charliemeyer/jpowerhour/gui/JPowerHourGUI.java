@@ -2,7 +2,12 @@ package net.charliemeyer.jpowerhour.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -11,9 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import javazoom.jlgui.basicplayer.BasicPlayerException;
-
 import net.charliemeyer.jpowerhour.PowerHourSong;
+import net.charliemeyer.jpowerhour.PowerHourThread;
 import net.charliemeyer.jpowerhour.gui.panels.LowerButtonPanel;
 import net.charliemeyer.jpowerhour.gui.panels.SongListPanel;
 import net.charliemeyer.jpowerhour.gui.panels.UpperStatusPanel;
@@ -25,6 +29,7 @@ public class JPowerHourGUI
 	private SongListPanel songListPanel;
 	private LowerButtonPanel lowerButtonPanel;
 	private UpperStatusPanel upperStatusPanel;
+	private PowerHourThread thread;
 	
 	private final int GUI_WIDTH = 400;
 	private final int GUI_HEIGHT = 800;
@@ -33,10 +38,27 @@ public class JPowerHourGUI
 	
 	public JPowerHourGUI()
 	{
+		thread = new PowerHourThread();
+		
 		frame = new JFrame("jPowerHour");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		frame.setJMenuBar(initializeMenuBar());
+		
+		Image icon = null;
+		try
+		{
+			icon = ImageIO.read(new File("images/beer.png"));
+		}
+		catch(IOException ioe)
+		{
+			ioe.printStackTrace();
+		}
+		
+		if(icon != null)
+		{
+			frame.setIconImage(icon);
+		}
+		
 		panel = new JPanel();
 		Dimension dim = new Dimension(GUI_WIDTH, GUI_HEIGHT);
 		
@@ -109,20 +131,21 @@ public class JPowerHourGUI
 		return lowerButtonPanel;
 	}
 	
+	public PowerHourThread getPowerHourThread()
+	{
+		return thread;
+	}
+	
 	public void runPowerHour()
 	{
-		for(int i = 0; i < songListPanel.getPowerHourSongCount(); i++)
+		ArrayList<PowerHourSong> songs = new ArrayList<PowerHourSong>();
+		for(int i = 0; i < getSongListPanel().getPowerHourSongCount(); i++)
 		{
-			PowerHourSong song = songListPanel.getPowerHourSong(i);
-			try 
-			{
-				song.playSong();
-			} 
-			catch (BasicPlayerException e) 
-			{
-				e.printStackTrace();
-			}
+			songs.add(getSongListPanel().getPowerHourSong(i));
 		}
+		thread.setSongs(songs);
+		Thread th = new Thread(thread);
+		th.start();
 	}
 	
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
