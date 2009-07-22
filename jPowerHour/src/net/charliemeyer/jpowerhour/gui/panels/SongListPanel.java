@@ -10,14 +10,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import net.charliemeyer.jpowerhour.JPowerHourListener;
 import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.gui.JPowerHourGUI;
 import net.charliemeyer.jpowerhour.gui.util.SongListRenderer;
 
-public class SongListPanel extends JPanel implements MouseListener
+public class SongListPanel extends JPanel implements MouseListener, JPowerHourListener
 {
-	JList list;
-	DefaultListModel listModel;
+	private JList list;
+	private DefaultListModel listModel;
+	private boolean isRunningPowerHour = false;
 	
 	public SongListPanel(JPowerHourGUI parent)
 	{
@@ -96,6 +98,10 @@ public class SongListPanel extends JPanel implements MouseListener
 	@Override
 	public void mouseClicked(MouseEvent event) 
 	{
+		if(isRunningPowerHour)
+		{
+			return;
+		}
 		int count = event.getClickCount();
 		if(count >= 2)
 		{
@@ -129,6 +135,35 @@ public class SongListPanel extends JPanel implements MouseListener
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void powerHourFinished() {
+		isRunningPowerHour = false;
+	}
+
+	@Override
+	public void powerHourPaused() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void powerHourResumed() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void powerHourStarted() {
+		isRunningPowerHour = true;
+	}
+
+	@Override
+	public void songChange(JPowerHourSong currentlyPlaying,
+			int currentlyPlayingNumber) {
 		// TODO Auto-generated method stub
 		
 	}
