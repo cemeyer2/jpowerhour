@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Jul 22, 2009 2:24:51 PM                                                        
+
+     jPowerHour    
+     jPower Hour Build File
+                   
+     chuck                                                                
+     ====================================================================== -->
+<project name="jPowerHour" default="dist">
+    <description>
+            jPower Hour Build File
+    </description>
+	
+	<target name="init">
+		<delete dir="build"/>
+		<delete dir="jar"/>
+		<delete dir="dist"/>
+		<mkdir dir="build"/>
+		<mkdir dir="jar"/>
+		<mkdir dir="dist"/>
+	</target>
+	
+	<path id="compile.classpath">
+		<fileset dir="${basedir}/../lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="compile" depends="init">
+		<javac srcdir="${basedir}/../src" destdir="build/" classpathref="compile.classpath"/>
+	</target>
+	
+	<target name="jar" depends="compile">
+		<jar destfile="jar/jPowerHour.jar">
+			<fileset dir="build/"/>
+			
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Implementation-Vendor" value="Charlie Meyer"/>
+				<attribute name="Implementation-Title" value="jPowerHour"/>
+				<attribute name="Main-Class" value="net.charliemeyer.jpowerhour.gui.JPowerHourGUI"/>
+			</manifest>
+		</jar>
+		<copy todir="jar/">
+			<fileset dir="${basedir}/../lib/"/>
+		</copy>
+		
+		<signjar
+		    alias="alias" keystore="keystore"
+		    storepass="abc123"
+		    preservelastmodified="true">
+		  <path>
+		    <fileset dir="jar" includes="**/*.jar" />
+		  </path>
+		</signjar>
+
+	</target>
+	
+	<target name="dist" description="prepare for distribution">
+		
+	</target>
+		
+   
+</project>
