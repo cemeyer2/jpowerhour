@@ -1,6 +1,8 @@
 package net.charliemeyer.jpowerhour.gui.panels;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -12,7 +14,7 @@ import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.gui.JPowerHourGUI;
 import net.charliemeyer.jpowerhour.gui.util.SongListRenderer;
 
-public class SongListPanel extends JPanel
+public class SongListPanel extends JPanel implements MouseListener
 {
 	JList list;
 	DefaultListModel listModel;
@@ -28,6 +30,7 @@ public class SongListPanel extends JPanel
 		list = new JList(listModel);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setCellRenderer(new SongListRenderer());
+		list.addMouseListener(this);
 		
 		JScrollPane scrollPane = new JScrollPane(list);
 		
@@ -83,5 +86,45 @@ public class SongListPanel extends JPanel
 			listModel.set(index+1, b);
 			list.setSelectedIndex(index+1);
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent event) 
+	{
+		int count = event.getClickCount();
+		if(count >= 2)
+		{
+			int index = list.locationToIndex(event.getPoint());
+			if(index != -1)
+			{
+				JPowerHourSong song = (JPowerHourSong) listModel.get(index);
+				EditSongPanel panel = new EditSongPanel(song);
+				panel.show();
+			}
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

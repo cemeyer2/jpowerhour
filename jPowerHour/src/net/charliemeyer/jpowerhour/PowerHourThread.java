@@ -49,6 +49,26 @@ public class PowerHourThread implements Runnable
 				e.printStackTrace();
 			}
 		}
+		for(JPowerHourListener listener : listeners)
+		{
+			listener.finished();
+		}
+	}
+	
+	public void stop()
+	{
+		try 
+		{
+			JPowerHourPlayer.getJPowerHourPlayer().stop();
+		} 
+		catch (BasicPlayerException e) 
+		{
+			e.printStackTrace();
+		}
+		for(JPowerHourListener listener : listeners)
+		{
+			listener.finished();
+		}
 	}
 	
 	public void pause()
@@ -75,7 +95,7 @@ public class PowerHourThread implements Runnable
 		}
 		try
 		{
-			JPowerHourPlayer.getJPowerHourPlayer().play();
+			JPowerHourPlayer.getJPowerHourPlayer().resume();
 		}
 		catch(BasicPlayerException bpe)
 		{

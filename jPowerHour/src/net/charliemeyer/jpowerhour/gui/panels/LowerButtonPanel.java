@@ -15,13 +15,13 @@ import javax.swing.JPanel;
 
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
-
+import net.charliemeyer.jpowerhour.JPowerHourListener;
 import net.charliemeyer.jpowerhour.JPowerHourPlayer;
 import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.gui.JPowerHourGUI;
 import net.charliemeyer.jpowerhour.gui.util.MusicFilter;
 
-public class LowerButtonPanel extends JPanel implements ActionListener
+public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHourListener
 {
 	private JButton play, pause, stop, add, remove, up, down;
 	
@@ -34,6 +34,7 @@ public class LowerButtonPanel extends JPanel implements ActionListener
 		
 		this.parent = parent;
 		this.songListPanel = parent.getSongListPanel();
+		parent.getPowerHourThread().addPowerHourListener(this);
 		
 		setLayout(new GridLayout(1,7));
 		
@@ -157,34 +158,54 @@ public class LowerButtonPanel extends JPanel implements ActionListener
 		int status = JPowerHourPlayer.getJPowerHourPlayer().getBasicPlayerStatus();
 		if(status == BasicPlayer.PLAYING)
 		{
-			try 
-			{
-				JPowerHourPlayer.getJPowerHourPlayer().pause();
-			} 
-			catch (BasicPlayerException e) 
-			{
-				e.printStackTrace();
-			}
+			parent.getPowerHourThread().pause();
 		}
 		else if(status == BasicPlayer.PAUSED)
 		{
-			try 
-			{
-				JPowerHourPlayer.getJPowerHourPlayer().resume();
-			} 
-			catch (BasicPlayerException e) 
-			{
-				e.printStackTrace();
-			}
+			parent.getPowerHourThread().resume();
 		}
 	}
 
-	private void handleStopAction() {
-
+	private void handleStopAction() 
+	{
+		parent.getPowerHourThread().stop();
 	}
 
 	private void handlePlayAction() {
+		add.setEnabled(false);
+		remove.setEnabled(false);
+		up.setEnabled(false);
+		down.setEnabled(false);
+		play.setEnabled(false);
 		parent.runPowerHour();
+		
+	}
+
+	@Override
+	public void finished() {
+		add.setEnabled(true);
+		remove.setEnabled(true);
+		up.setEnabled(true);
+		down.setEnabled(true);
+		play.setEnabled(true);		
+	}
+
+	@Override
+	public void paused() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resumed() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void songChange(JPowerHourSong currentlyPlaying,
+			int currentlyPlayingNumber) {
+		// TODO Auto-generated method stub
 		
 	}
 }

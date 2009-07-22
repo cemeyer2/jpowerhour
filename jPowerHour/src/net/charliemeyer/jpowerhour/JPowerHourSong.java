@@ -33,10 +33,15 @@ public class JPowerHourSong implements BasicPlayerListener
 		title = player.getTitle();
 	}
 	
-	public void setStartPos(int mins, int sec) throws BasicPlayerException
+	public void setStartPos(int mins, int sec)
 	{
 		long ms = (60*mins+sec)*1000;
 		
+		setStartPos(ms);
+	}
+	
+	public void setStartPos(long ms)
+	{
 		long lengthMs = playLength * 1000;
 		//if the requested starting position doesnt leave enough room to play the requested length
 		//move the starting pos back playLength number of ms from the end of the song
@@ -128,5 +133,10 @@ public class JPowerHourSong implements BasicPlayerListener
 	@Override
 	public void stateUpdated(BasicPlayerEvent arg0) {
 		
+	}
+	
+	public long getDurationMs()
+	{
+		return durationMs;
 	}
 }

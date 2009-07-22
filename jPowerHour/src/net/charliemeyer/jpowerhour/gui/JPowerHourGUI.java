@@ -36,7 +36,7 @@ public class JPowerHourGUI implements ActionListener
 	private final int GUI_WIDTH = 400;
 	private final int GUI_HEIGHT = 800;
 	
-	private JMenuItem quit,open,openItunes,save,saveAs,onlineHelp,about;
+	private JMenuItem quit,open,openItunes,save,saveAs,onlineHelp,about,managePlayers;
 	
 	public JPowerHourGUI()
 	{
@@ -107,6 +107,11 @@ public class JPowerHourGUI implements ActionListener
 		file.addSeparator();
 		file.add(quit);
 		menubar.add(file);
+		
+		JMenu players = new JMenu("Players");
+		managePlayers = new JMenuItem("Manage Players");
+		players.add(managePlayers);
+		menubar.add(players);
 		
 		JMenu help = new JMenu("Help");
 		onlineHelp = new JMenuItem("Online Help");

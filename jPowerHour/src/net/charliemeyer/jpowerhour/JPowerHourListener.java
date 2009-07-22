@@ -7,4 +7,6 @@ public interface JPowerHourListener {
 	public void paused();
 	
 	public void resumed();
+	
+	public void finished();
 }

@@ -15,5 +15,13 @@
 	<classpathentry kind="lib" path="lib/commons-logging-adapters-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-api-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jargs.jar"/>
+	<classpathentry kind="lib" path="lib/ant.jar"/>
+	<classpathentry kind="lib" path="lib/jaxen-core.jar"/>
+	<classpathentry kind="lib" path="lib/jaxen-jdom.jar"/>
+	<classpathentry kind="lib" path="lib/jdom.jar"/>
+	<classpathentry kind="lib" path="lib/saxpath.jar"/>
+	<classpathentry kind="lib" path="lib/xalan.jar"/>
+	<classpathentry kind="lib" path="lib/xerces.jar"/>
+	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -87,21 +87,24 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 	@Override
 	public void progress(int arg0, long microseconds, byte[] arg2, Map arg3) 
 	{
-		long start = currentlyPlayingSong.getStartTime();
-		long end = start + currentlyPlayingSong.getPlayLength()*1000;
-		long pos = microseconds / 1000;
-		int progress = (int) (((double)(pos)/(double)(end-start))*100);
-		
-		long cur = start+pos;
-		int totalSec = (int) (cur/1000);
-		
-		int mins = totalSec/60;
-		int secs = totalSec % 60;
-		
-		String str = mins+":"+((secs < 10)?"0"+secs : secs);
-		
-		this.progress.setValue(progress);
-		this.progress.setString(str);
+		if(currentlyPlayingSong != null)
+		{
+			long start = currentlyPlayingSong.getStartTime();
+			long end = start + currentlyPlayingSong.getPlayLength()*1000;
+			long pos = microseconds / 1000;
+			int progress = (int) (((double)(pos)/(double)(end-start))*100);
+			
+			long cur = start+pos;
+			int totalSec = (int) (cur/1000);
+			
+			int mins = totalSec/60;
+			int secs = totalSec % 60;
+			
+			String str = mins+":"+((secs < 10)?"0"+secs : secs);
+			
+			this.progress.setValue(progress);
+			this.progress.setString(str);
+		}
 		
 		
 	}
@@ -159,5 +162,15 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 	{
 		texts = new ArrayList<String>();
 		texts.add("Welcome to jPowerHour");
+	}
+
+	@Override
+	public void finished() {
+		initializeTexts();
+		texts.add("Power Hour Complete!");
+		progress.setValue(0);
+		progress.setString("Power Hour Complete!");
+		lowerLeft.setText("0:00");
+		lowerRight.setText("0:00");
 	}
 }
