@@ -25,6 +25,8 @@ import net.charliemeyer.jpowerhour.gui.panels.AboutPanel;
 import net.charliemeyer.jpowerhour.gui.panels.LowerButtonPanel;
 import net.charliemeyer.jpowerhour.gui.panels.SongListPanel;
 import net.charliemeyer.jpowerhour.gui.panels.UpperStatusPanel;
+import net.charliemeyer.jpowerhour.gui.panels.players.ListPlayersPanel;
+import net.charliemeyer.jpowerhour.gui.util.JPowerHourFrame;
 import net.charliemeyer.jpowerhour.gui.util.JPowerHourPlaylistFilter;
 import net.charliemeyer.jpowerhour.player.JPowerHourPlayer;
 import net.charliemeyer.jpowerhour.util.xml.LoadPlaylist;
@@ -34,41 +36,28 @@ import org.jdom.JDOMException;
 
 public class JPowerHourGUI implements ActionListener
 {
-	private JFrame frame;
+	private JPowerHourFrame frame;
 	private JPanel panel;
 	private SongListPanel songListPanel;
 	private LowerButtonPanel lowerButtonPanel;
 	private UpperStatusPanel upperStatusPanel;
 	private PowerHourThread thread;
 	private File currentlyLoadedFile;
+	private ListPlayersPanel listPlayersPanel;
 	
 	private final int GUI_WIDTH = 400;
 	private final int GUI_HEIGHT = 800;
 	
-	private JMenuItem quit,open,openItunes,save,saveAs,onlineHelp,about,managePlayers;
+	private JMenuItem quit,open,openItunes,save,saveAs,onlineHelp,about,managePlayers,manageInterludes;
 	
 	public JPowerHourGUI()
 	{
 		thread = new PowerHourThread();
+		listPlayersPanel = new ListPlayersPanel();
 		
-		frame = new JFrame("jPowerHour");
+		frame = new JPowerHourFrame("jPowerHour");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setJMenuBar(initializeMenuBar());
-		
-		Image icon = null;
-		try
-		{
-			icon = ImageIO.read(new File("images/beer.png"));
-		}
-		catch(IOException ioe)
-		{
-			ioe.printStackTrace();
-		}
-		
-		if(icon != null)
-		{
-			frame.setIconImage(icon);
-		}
 		
 		panel = new JPanel();
 		Dimension dim = new Dimension(GUI_WIDTH, GUI_HEIGHT);
@@ -119,10 +108,16 @@ public class JPowerHourGUI implements ActionListener
 		file.add(quit);
 		menubar.add(file);
 		
-		JMenu players = new JMenu("Players");
+		JMenu options = new JMenu("Options");
 		managePlayers = new JMenuItem("Manage Players");
-		players.add(managePlayers);
-		menubar.add(players);
+		manageInterludes = new JMenuItem("Manage Interludes");
+		
+		managePlayers.addActionListener(this);
+		manageInterludes.addActionListener(this);
+		
+		options.add(managePlayers);
+		options.add(manageInterludes);
+		menubar.add(options);
 		
 		JMenu help = new JMenu("Help");
 		onlineHelp = new JMenuItem("Online Help");
@@ -165,8 +160,11 @@ public class JPowerHourGUI implements ActionListener
 	
 	public void runPowerHour()
 	{
-		JPowerHourPlayer player = new JPowerHourPlayer("Charlie", 22, true, 72, 175, 1.5, .035);
-		thread.addPlayer(player);
+		thread.clearPlayers();
+		for(int i = 0; i < listPlayersPanel.getPlayerCount(); i++)
+		{
+			thread.addPlayer(listPlayersPanel.getPlayer(i));
+		}
 		ArrayList<JPowerHourSong> songs = new ArrayList<JPowerHourSong>();
 		for(int i = 0; i < getSongListPanel().getPowerHourSongCount(); i++)
 		{
@@ -217,6 +215,23 @@ public class JPowerHourGUI implements ActionListener
 		{
 			handleAboutAction();
 		}
+		else if(manageInterludes.equals(source))
+		{
+			handleManageInterludesAction();
+		}
+		else if(managePlayers.equals(source))
+		{
+			handleManagePlayersAction();
+		}
+	}
+
+	private void handleManageInterludesAction() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void handleManagePlayersAction() {
+		listPlayersPanel.show();
 	}
 
 	private void handleAboutAction() {

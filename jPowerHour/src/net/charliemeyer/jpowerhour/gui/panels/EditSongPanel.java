@@ -26,7 +26,7 @@ public class EditSongPanel extends JPanel implements ActionListener
 {
 	private JPowerHourSong song;
 	private JSlider startSlider, durationSlider;
-	private JButton preview, ok, cancel;
+	private JButton previewStart, previewEnd, ok, cancel;
 	private JFrame frame;
 	
 	public EditSongPanel(JPowerHourSong song)
@@ -58,19 +58,29 @@ public class EditSongPanel extends JPanel implements ActionListener
 
 		
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new GridLayout(1,3));
+		buttonPanel.setLayout(new GridLayout(1,4));
 		
-		preview = new JButton("Preview");
+		previewStart = new JButton("Preview Start");
+		previewEnd = new JButton("Preview End");
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
 		
-		preview.addActionListener(this);
+		previewStart.addActionListener(this);
+		previewEnd.addActionListener(this);
 		ok.addActionListener(this);
 		cancel.addActionListener(this);
 		
 		try
 		{
-			preview.setIcon(new ImageIcon(ImageIO.read(new File("images/play.png"))));
+			previewStart.setIcon(new ImageIcon(ImageIO.read(new File("images/play.png"))));
+		}
+		catch(IOException ioe)
+		{
+			ioe.printStackTrace();
+		}
+		try
+		{
+			previewEnd.setIcon(new ImageIcon(ImageIO.read(new File("images/play.png"))));
 		}
 		catch(IOException ioe)
 		{
@@ -93,7 +103,8 @@ public class EditSongPanel extends JPanel implements ActionListener
 			ioe.printStackTrace();
 		}
 		
-		buttonPanel.add(preview);
+		buttonPanel.add(previewStart);
+		buttonPanel.add(previewEnd);
 		buttonPanel.add(ok);
 		buttonPanel.add(cancel);
 		
@@ -134,9 +145,13 @@ public class EditSongPanel extends JPanel implements ActionListener
 	{
 		Object source = event.getSource();
 		
-		if(preview.equals(source))
+		if(previewStart.equals(source))
 		{
-			handlePreviewAction();
+			handlePreviewStartAction();
+		}
+		else if(previewEnd.equals(source))
+		{
+			handlePreviewEndAction();
 		}
 		else if(ok.equals(source))
 		{
@@ -146,6 +161,27 @@ public class EditSongPanel extends JPanel implements ActionListener
 		{
 			handleCancelAction();
 		}
+	}
+
+	private void handlePreviewEndAction() 
+	{
+		long oldstart = song.getStartTime();	
+		int oldlength = song.getPlayLength();
+		
+		song.setPlayLength(10);
+		song.setStartPos(startSlider.getValue()*1000+(durationSlider.getValue()-10)*1000);
+		previewStart.setEnabled(false);
+		try 
+		{
+			song.playSong();
+		} 
+		catch (BasicPlayerException e) 
+		{
+			e.printStackTrace();
+		}
+		previewStart.setEnabled(true);
+		song.setPlayLength(oldlength);
+		song.setStartPos(oldstart);
 	}
 
 	private void handleCancelAction() 
@@ -164,14 +200,14 @@ public class EditSongPanel extends JPanel implements ActionListener
 		frame.setVisible(false);
 	}
 
-	private void handlePreviewAction() 
+	private void handlePreviewStartAction() 
 	{
 		long oldstart = song.getStartTime();	
 		int oldlength = song.getPlayLength();
 		
-		song.setPlayLength(durationSlider.getValue());
+		song.setPlayLength(10);
 		song.setStartPos(startSlider.getValue()*1000);
-		preview.setEnabled(false);
+		previewStart.setEnabled(false);
 		try 
 		{
 			song.playSong();
@@ -180,7 +216,7 @@ public class EditSongPanel extends JPanel implements ActionListener
 		{
 			e.printStackTrace();
 		}
-		preview.setEnabled(true);
+		previewStart.setEnabled(true);
 		song.setPlayLength(oldlength);
 		song.setStartPos(oldstart);
 	}

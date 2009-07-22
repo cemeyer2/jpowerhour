@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
 
 import javazoom.jlgui.basicplayer.BasicController;
 import javazoom.jlgui.basicplayer.BasicPlayerEvent;
@@ -41,7 +42,7 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 		
 		initializeTexts();
 		
-		upperLabel = new JLabel();
+		upperLabel = new JLabel("",SwingConstants.CENTER);
 		lowerLeft = new JLabel("0:00");
 		lowerRight = new JLabel("0:00");
 		progress = new JProgressBar(0, 100);

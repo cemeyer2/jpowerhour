@@ -136,6 +136,9 @@ public class JPowerHourPlayer implements JPowerHourListener
 		
 	}
 	
-	
+	public String toString()
+	{
+		return this.getName();
+	}
 	
 }
