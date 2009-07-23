@@ -20,6 +20,7 @@ import net.charliemeyer.jpowerhour.JPowerHourAudioPlayer;
 import net.charliemeyer.jpowerhour.JPowerHourListener;
 import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.gui.JPowerHourGUI;
+import net.charliemeyer.jpowerhour.gui.util.JButtonIconizer;
 import net.charliemeyer.jpowerhour.gui.util.MusicFilter;
 
 public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHourListener
@@ -49,52 +50,14 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 		up = new JButton();
 		down = new JButton();
 		
-		try
-		{
-			play.setIcon(new ImageIcon(ImageIO.read(new File("images/play.png"))));
-			pause.setIcon(new ImageIcon(ImageIO.read(new File("images/pause.png"))));
-			stop.setIcon(new ImageIcon(ImageIO.read(new File("images/stop.png"))));
-			add.setIcon(new ImageIcon(ImageIO.read(new File("images/add.png"))));
-			remove.setIcon(new ImageIcon(ImageIO.read(new File("images/remove.png"))));
-			up.setIcon(new ImageIcon(ImageIO.read(new File("images/up.png"))));
-			down.setIcon(new ImageIcon(ImageIO.read(new File("images/down.png"))));
-		}
-		catch(IOException ioe)
-		{
-			try 
-			{
-				play.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/play.png"))));
-				pause.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/pause.png"))));
-				stop.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/stop.png"))));
-				add.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/add.png"))));
-				remove.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/remove.png"))));
-				up.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/up.png"))));
-				down.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/down.png"))));
-			} 
-			catch (MalformedURLException e) 
-			{
-				play.setText("Play");
-				pause.setText("Pause");
-				stop.setText("Stop");
-				add.setText("Add Song");
-				remove.setText("Remove Song");
-				up.setText("Move Up");
-				down.setText("Move Down");
-			} 
-			catch (IOException e) 
-			{
-				play.setText("Play");
-				pause.setText("Pause");
-				stop.setText("Stop");
-				add.setText("Add Song");
-				remove.setText("Remove Song");
-				up.setText("Move Up");
-				down.setText("Move Down");
-			}
-		}
-		
-		
-		
+		JButtonIconizer.iconize(play, "play.png", "Play", "Play Power Hour", true);
+		JButtonIconizer.iconize(pause, "pause.png", "Pause", "Pause Power Hour", true);
+		JButtonIconizer.iconize(stop, "stop.png", "Stop", "Stop and Reset Power Hour", true);
+		JButtonIconizer.iconize(add, "add.png", "Add", "Add Song to Power Hour", true);
+		JButtonIconizer.iconize(remove, "remove.png", "Remove", "Remove Selected Song from Power Hour", true);
+		JButtonIconizer.iconize(up, "up.png", "Up", "Move Selected Song Up", true);
+		JButtonIconizer.iconize(down, "down.png", "Down", "Move Selected Song Down", true);
+				
 		play.addActionListener(this);
 		pause.addActionListener(this);
 		stop.addActionListener(this);

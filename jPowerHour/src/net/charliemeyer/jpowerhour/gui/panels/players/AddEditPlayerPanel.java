@@ -22,6 +22,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import net.charliemeyer.jpowerhour.gui.util.AlcoholPercentageListRenderer;
+import net.charliemeyer.jpowerhour.gui.util.JButtonIconizer;
 import net.charliemeyer.jpowerhour.gui.util.JPowerHourFrame;
 import net.charliemeyer.jpowerhour.player.JPowerHourPlayer;
 
@@ -71,49 +72,14 @@ public class AddEditPlayerPanel extends JPanel implements ActionListener
 		alcoholPercentage.setBorder(BorderFactory.createTitledBorder("Alcohol Percentage"));
 		alcoholPercentage.setRenderer(new AlcoholPercentageListRenderer());
 		
-		ok = new JButton();
-		ok.addActionListener(this);
-		try
-		{
-			ok.setIcon(new ImageIcon(ImageIO.read(new File("images/ok.png"))));
-		}
-		catch(IOException ioe)
-		{
-			try 
-			{
-				ok.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/ok.png"))));
-			} 
-			catch (MalformedURLException e) 
-			{
-				ok.setText("OK");
-			} 
-			catch (IOException e) 
-			{
-				ok.setText("OK");
-			}
-		}
-		
+		ok = new JButton();		
 		cancel = new JButton();
+		
+		JButtonIconizer.iconize(ok, "ok.png", "OK", "OK", true);
+		JButtonIconizer.iconize(cancel, "cancel.png", "Cancel", "Cancel", true);
+		
+		ok.addActionListener(this);
 		cancel.addActionListener(this);
-		try
-		{
-			cancel.setIcon(new ImageIcon(ImageIO.read(new File("images/cancel.png"))));
-		}
-		catch(IOException ioe)
-		{
-			try 
-			{
-				cancel.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/cancel.png"))));
-			} 
-			catch (MalformedURLException e) 
-			{
-				cancel.setText("Cancel");
-			} 
-			catch (IOException e) 
-			{
-				cancel.setText("Cancel");
-			}
-		}
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,2));

@@ -22,6 +22,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 
+import net.charliemeyer.jpowerhour.gui.util.JButtonIconizer;
 import net.charliemeyer.jpowerhour.gui.util.JPowerHourFrame;
 import net.charliemeyer.jpowerhour.player.JPowerHourPlayer;
 
@@ -46,34 +47,10 @@ public class ListPlayersPanel extends JPanel implements ActionListener, WindowLi
 		remove = new JButton();
 		close = new JButton();
 		
-		try
-		{
-			add.setIcon(new ImageIcon(ImageIO.read(new File("images/add.png"))));
-			remove.setIcon(new ImageIcon(ImageIO.read(new File("images/remove.png"))));
-			close.setIcon(new ImageIcon(ImageIO.read(new File("images/cancel.png"))));
-		}
-		catch(IOException ioe)
-		{
-			try 
-			{
-				add.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/add.png"))));
-				remove.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/remove.png"))));
-				close.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/cancel.png"))));
-				
-			} 
-			catch (MalformedURLException e) 
-			{
-				add.setText("Add Player");
-				remove.setText("Remove Player");
-				close.setText("Close");
-			} 
-			catch (IOException e) 
-			{
-				add.setText("Add Player");
-				remove.setText("Remove Player");
-				close.setText("Close");
-			}			
-		}
+		JButtonIconizer.iconize(add, "add.png", "Add Player", "Add Player", true);
+		JButtonIconizer.iconize(remove, "remove.png", "Remove", "Remove Player", true);
+		JButtonIconizer.iconize(close, "cancel.png", "Close", "Close", true);
+		
 		add.addActionListener(this);
 		remove.addActionListener(this);
 		close.addActionListener(this);

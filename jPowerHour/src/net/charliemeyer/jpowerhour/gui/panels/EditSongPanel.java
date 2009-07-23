@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import net.charliemeyer.jpowerhour.JPowerHourSong;
+import net.charliemeyer.jpowerhour.gui.util.JButtonIconizer;
 
 public class EditSongPanel extends JPanel implements ActionListener
 {
@@ -61,45 +62,26 @@ public class EditSongPanel extends JPanel implements ActionListener
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(1,4));
 		
-		previewStart = new JButton("Preview Start");
-		previewEnd = new JButton("Preview End");
-		ok = new JButton("OK");
-		cancel = new JButton("Cancel");
+		previewStart = new JButton();
+		previewEnd = new JButton();
+		ok = new JButton();
+		cancel = new JButton();
 		
 		previewStart.addActionListener(this);
 		previewEnd.addActionListener(this);
 		ok.addActionListener(this);
 		cancel.addActionListener(this);
 		
-		try
-		{
-			previewStart.setIcon(new ImageIcon(ImageIO.read(new File("images/play.png"))));
-			previewEnd.setIcon(new ImageIcon(ImageIO.read(new File("images/play.png"))));
-			ok.setIcon(new ImageIcon(ImageIO.read(new File("images/ok.png"))));
-			cancel.setIcon(new ImageIcon(ImageIO.read(new File("images/cancel.png"))));
-		}
-		catch(IOException ioe)
-		{
-			try 
-			{
-				previewStart.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/play.png"))));
-				previewEnd.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/play.png"))));
-				ok.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/ok.png"))));
-				cancel.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/cancel.png"))));
-			} 
-			catch (MalformedURLException e) 
-			{
-			} 
-			catch (IOException e) 
-			{
-			}
-		}
+		
+		JButtonIconizer.iconize(previewStart, "play.png", "Preview Start", "Preview From Start of Interval", false);
+		JButtonIconizer.iconize(previewEnd, "play.png", "Preview End", "Preview From End of Interval", false);
+		JButtonIconizer.iconize(ok, "ok.png", "OK", "OK", true);
+		JButtonIconizer.iconize(cancel, "cancel.png", "Cancel", "Cancel", true);
 		
 		buttonPanel.add(previewStart);
 		buttonPanel.add(previewEnd);
 		buttonPanel.add(ok);
 		buttonPanel.add(cancel);
-		
 		
 		add(title);
 		add(startSlider);

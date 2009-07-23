@@ -3,7 +3,6 @@ package net.charliemeyer.jpowerhour.gui;
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -12,7 +11,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -25,6 +23,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.PowerHourThread;
+import net.charliemeyer.jpowerhour.gui.itunes.ITunesPlaylistImportPanel;
 import net.charliemeyer.jpowerhour.gui.panels.AboutPanel;
 import net.charliemeyer.jpowerhour.gui.panels.LowerButtonPanel;
 import net.charliemeyer.jpowerhour.gui.panels.SongListPanel;
@@ -32,7 +31,6 @@ import net.charliemeyer.jpowerhour.gui.panels.UpperStatusPanel;
 import net.charliemeyer.jpowerhour.gui.panels.players.ListPlayersPanel;
 import net.charliemeyer.jpowerhour.gui.util.JPowerHourFrame;
 import net.charliemeyer.jpowerhour.gui.util.JPowerHourPlaylistFilter;
-import net.charliemeyer.jpowerhour.player.JPowerHourPlayer;
 import net.charliemeyer.jpowerhour.util.xml.LoadPlaylist;
 import net.charliemeyer.jpowerhour.util.xml.SavePlaylist;
 
@@ -101,9 +99,7 @@ public class JPowerHourGUI implements ActionListener
 		openItunes.addActionListener(this);
 		save.addActionListener(this);
 		saveAs.addActionListener(this);
-		
-		openItunes.setEnabled(false);
-		
+				
 		file.add(open);
 		file.add(openItunes);
 		file.add(save);
@@ -320,9 +316,9 @@ public class JPowerHourGUI implements ActionListener
 		}
 	}
 
-	private void handleOpenItunesAction() {
-		// TODO Auto-generated method stub
-		
+	private void handleOpenItunesAction() 
+	{
+		new ITunesPlaylistImportPanel(this).show();
 	}
 
 	private void handleOpenAction() 
