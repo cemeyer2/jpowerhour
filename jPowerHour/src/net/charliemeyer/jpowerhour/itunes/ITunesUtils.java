@@ -8,7 +8,6 @@ public class ITunesUtils
 	public static File getItunesLibrary()
 	{
 		String os = System.getProperty("os.name");
-		System.out.println(os);
 		
 		if(os.startsWith("Mac OS X"))
 		{
@@ -26,9 +25,21 @@ public class ITunesUtils
 			}
 			return null;
 		}
-		else if(os.startsWith("Windows"))
+		else if(os.startsWith("Windows XP"))
 		{
-			//find itunes windows
+			File iTunesDir = new File(System.getProperty("user.home")+File.separator+"My Documents"+File.separator+"My Music"+File.separator+"iTunes");
+			if(!iTunesDir.exists())
+			{
+				return null;
+			}
+			for(File f : iTunesDir.listFiles())
+			{
+				if(f.getName().equals("iTunes Music Library.xml"))
+				{
+					return f;
+				}
+			}
+			return null;
 		}
 		return null;
 	}
