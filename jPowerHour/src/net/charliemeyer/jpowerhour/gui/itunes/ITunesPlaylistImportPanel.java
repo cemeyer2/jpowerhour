@@ -23,6 +23,7 @@ import net.charliemeyer.jpowerhour.gui.util.JButtonIconizer;
 import net.charliemeyer.jpowerhour.gui.util.JPowerHourFrame;
 import net.charliemeyer.jpowerhour.gui.util.PlaylistListRenderer;
 import net.charliemeyer.jpowerhour.itunes.ITunesPlayListParser;
+import net.charliemeyer.jpowerhour.util.Extension;
 
 public class ITunesPlaylistImportPanel extends JPanel implements ActionListener
 {
@@ -115,8 +116,11 @@ public class ITunesPlaylistImportPanel extends JPanel implements ActionListener
 					File f = track.getFile();
 					if(f.exists())
 					{
-						JPowerHourSong song = new JPowerHourSong(f);
-						parent.getSongListPanel().addPowerHourSong(song);
+						if(Extension.getExtension(f).equals(Extension.mp3))
+						{
+							JPowerHourSong song = new JPowerHourSong(f);
+							parent.getSongListPanel().addPowerHourSong(song);
+						}
 					}
 					else
 					{
