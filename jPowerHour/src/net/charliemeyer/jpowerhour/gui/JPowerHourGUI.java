@@ -175,14 +175,6 @@ public class JPowerHourGUI implements ActionListener
 		th.start();
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
-	{
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
-		JPowerHourGUI gui = new JPowerHourGUI();
-		gui.show();
-	}
-	
 	@Override
 	public void actionPerformed(ActionEvent event) 
 	{
@@ -332,5 +324,13 @@ public class JPowerHourGUI implements ActionListener
 	{
 		frame.setVisible(false);
 		System.exit(0);		
+	}
+
+	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
+	{
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+	
+		JPowerHourGUI gui = new JPowerHourGUI();
+		gui.show();
 	}
 }

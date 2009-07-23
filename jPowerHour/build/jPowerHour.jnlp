@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jnlp spec="1.0+"
-  codebase="http://www.charliemeyer.net/jPowerHour/jar/"
+  codebase="http://jpowerhour.sourceforge.net/jar/"
 >
 <information>
   <title>jPowerHour</title>
   <vendor>Charlie Meyer</vendor>
   
   <description>jPowerHour</description>
+  <icon href="../images/beer.png"/>
 </information>
+
 <offline-allowed/>
 <security>
   <all-permissions/>

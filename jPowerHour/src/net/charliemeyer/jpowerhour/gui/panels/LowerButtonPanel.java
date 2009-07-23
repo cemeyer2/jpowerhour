@@ -1,11 +1,12 @@
 package net.charliemeyer.jpowerhour.gui.panels;
 
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -39,30 +40,60 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 		
 		setLayout(new GridLayout(1,7));
 		
-		Image playImage = null, pauseImage = null, stopImage = null, addImage = null, removeImage = null, upImage = null, downImage = null;
 
+		play = new JButton();
+		pause = new JButton();
+		stop = new JButton();
+		add = new JButton();
+		remove = new JButton();
+		up = new JButton();
+		down = new JButton();
+		
 		try
 		{
-	        playImage = ImageIO.read(new File("images/play.png"));
-	        pauseImage = ImageIO.read(new File("images/pause.png"));
-	        stopImage = ImageIO.read(new File("images/stop.png"));
-	        addImage = ImageIO.read(new File("images/add.png"));
-	        removeImage = ImageIO.read(new File("images/remove.png"));
-	        upImage = ImageIO.read(new File("images/up.png"));
-	        downImage = ImageIO.read(new File("images/down.png"));
+			play.setIcon(new ImageIcon(ImageIO.read(new File("images/play.png"))));
+			pause.setIcon(new ImageIcon(ImageIO.read(new File("images/pause.png"))));
+			stop.setIcon(new ImageIcon(ImageIO.read(new File("images/stop.png"))));
+			add.setIcon(new ImageIcon(ImageIO.read(new File("images/add.png"))));
+			remove.setIcon(new ImageIcon(ImageIO.read(new File("images/remove.png"))));
+			up.setIcon(new ImageIcon(ImageIO.read(new File("images/up.png"))));
+			down.setIcon(new ImageIcon(ImageIO.read(new File("images/down.png"))));
 		}
 		catch(IOException ioe)
 		{
-			ioe.printStackTrace();
+			try 
+			{
+				play.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/play.png"))));
+				pause.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/pause.png"))));
+				stop.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/stop.png"))));
+				add.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/add.png"))));
+				remove.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/remove.png"))));
+				up.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/up.png"))));
+				down.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/down.png"))));
+			} 
+			catch (MalformedURLException e) 
+			{
+				play.setText("Play");
+				pause.setText("Pause");
+				stop.setText("Stop");
+				add.setText("Add Song");
+				remove.setText("Remove Song");
+				up.setText("Move Up");
+				down.setText("Move Down");
+			} 
+			catch (IOException e) 
+			{
+				play.setText("Play");
+				pause.setText("Pause");
+				stop.setText("Stop");
+				add.setText("Add Song");
+				remove.setText("Remove Song");
+				up.setText("Move Up");
+				down.setText("Move Down");
+			}
 		}
 		
-		play = new JButton(new ImageIcon(playImage));
-		pause = new JButton(new ImageIcon(pauseImage));
-		stop = new JButton(new ImageIcon(stopImage));
-		add = new JButton(new ImageIcon(addImage));
-		remove = new JButton(new ImageIcon(removeImage));
-		up = new JButton(new ImageIcon(upImage));
-		down = new JButton(new ImageIcon(downImage));
+		
 		
 		play.addActionListener(this);
 		pause.addActionListener(this);

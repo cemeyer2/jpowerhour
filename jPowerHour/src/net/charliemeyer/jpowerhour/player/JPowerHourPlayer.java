@@ -15,14 +15,19 @@ public class JPowerHourPlayer implements JPowerHourListener
 	private long startDrinkingTime = -1;
 	private double shotGlassSize, alcholPercentage;
 	
-	public JPowerHourPlayer(String name, int age, boolean isMale, int height, int weight, double shotGlassSize, double alcoholPercentage)
+	public JPowerHourPlayer(String name, int age, boolean isMale, int weight, double shotGlassSize, double alcoholPercentage)
 	{
+		this();
 		this.name = name;
 		this.age = age;
 		this.isMale = isMale;
 		this.weight = weight;
 		this.shotGlassSize = shotGlassSize;
 		this.alcholPercentage = alcoholPercentage;
+	}
+	
+	public JPowerHourPlayer()
+	{
 		drinks = new ArrayList<BeerShot>();
 	}
 
@@ -64,6 +69,26 @@ public class JPowerHourPlayer implements JPowerHourListener
 
 	public void setWeight(int weight) {
 		this.weight = weight;
+	}
+
+
+	public double getShotGlassSize() {
+		return shotGlassSize;
+	}
+
+
+	public void setShotGlassSize(double shotGlassSize) {
+		this.shotGlassSize = shotGlassSize;
+	}
+
+
+	public double getAlcholPercentage() {
+		return alcholPercentage;
+	}
+
+
+	public void setAlcholPercentage(double alcholPercentage) {
+		this.alcholPercentage = alcholPercentage;
 	}
 
 

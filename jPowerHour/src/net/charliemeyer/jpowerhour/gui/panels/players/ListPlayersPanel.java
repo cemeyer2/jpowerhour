@@ -5,10 +5,14 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
@@ -21,10 +25,10 @@ import javax.swing.ListSelectionModel;
 import net.charliemeyer.jpowerhour.gui.util.JPowerHourFrame;
 import net.charliemeyer.jpowerhour.player.JPowerHourPlayer;
 
-public class ListPlayersPanel extends JPanel implements ActionListener, WindowListener
+public class ListPlayersPanel extends JPanel implements ActionListener, WindowListener, MouseListener
 {
 	JList list;
-	JButton add,remove;
+	JButton add,remove, close;
 	DefaultListModel listModel;
 	JPowerHourFrame frame;
 	
@@ -36,28 +40,49 @@ public class ListPlayersPanel extends JPanel implements ActionListener, WindowLi
 		listModel = new DefaultListModel();
 		list = new JList(listModel);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.addMouseListener(this);
 		
 		add = new JButton();
 		remove = new JButton();
+		close = new JButton();
 		
 		try
 		{
 			add.setIcon(new ImageIcon(ImageIO.read(new File("images/add.png"))));
 			remove.setIcon(new ImageIcon(ImageIO.read(new File("images/remove.png"))));
+			close.setIcon(new ImageIcon(ImageIO.read(new File("images/cancel.png"))));
 		}
 		catch(IOException ioe)
 		{
-			ioe.printStackTrace();
-			add.setText("Add Player");
-			remove.setText("Remove Player");
+			try 
+			{
+				add.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/add.png"))));
+				remove.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/remove.png"))));
+				close.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/cancel.png"))));
+				
+			} 
+			catch (MalformedURLException e) 
+			{
+				add.setText("Add Player");
+				remove.setText("Remove Player");
+				close.setText("Close");
+			} 
+			catch (IOException e) 
+			{
+				add.setText("Add Player");
+				remove.setText("Remove Player");
+				close.setText("Close");
+			}			
 		}
 		add.addActionListener(this);
 		remove.addActionListener(this);
+		close.addActionListener(this);
 		
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(1, 2));
+		panel.setLayout(new GridLayout(1, 3));
 		panel.add(add);
 		panel.add(remove);
+		panel.add(close);
 		
 		add(list, BorderLayout.CENTER);
 		add(panel, BorderLayout.SOUTH);
@@ -99,11 +124,43 @@ public class ListPlayersPanel extends JPanel implements ActionListener, WindowLi
 			listModel.remove(selected);
 		}
 	}
+	
+	public void addPlayer(JPowerHourPlayer player)
+	{
+		listModel.addElement(player);
+	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void actionPerformed(ActionEvent event) 
+	{
+		Object source = event.getSource();
+		if(add.equals(source))
+		{
+			handleAddAction();
+		}
+		else if(remove.equals(source))
+		{
+			handleRemoveAction();
+		}
+		else if(close.equals(source))
+		{
+			handleCloseAction();
+		}
+	}
+
+	private void handleCloseAction() 
+	{
+		frame.setVisible(false);
+	}
+
+	private void handleRemoveAction() 
+	{
+		this.removePlayer();
+	}
+
+	private void handleAddAction() 
+	{
+		new AddEditPlayerPanel(this).show();
 	}
 
 	@Override
@@ -143,6 +200,44 @@ public class ListPlayersPanel extends JPanel implements ActionListener, WindowLi
 
 	@Override
 	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent event) 
+	{
+		int count = event.getClickCount();
+		if(count > 1)
+		{
+			int index = list.locationToIndex(event.getPoint());
+			if(index != -1)
+			{
+				new AddEditPlayerPanel(this, (JPowerHourPlayer)listModel.get(index)).show();
+			}
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}

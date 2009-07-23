@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -19,7 +21,6 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
-
 import net.charliemeyer.jpowerhour.JPowerHourSong;
 
 public class EditSongPanel extends JPanel implements ActionListener
@@ -73,34 +74,25 @@ public class EditSongPanel extends JPanel implements ActionListener
 		try
 		{
 			previewStart.setIcon(new ImageIcon(ImageIO.read(new File("images/play.png"))));
-		}
-		catch(IOException ioe)
-		{
-			ioe.printStackTrace();
-		}
-		try
-		{
 			previewEnd.setIcon(new ImageIcon(ImageIO.read(new File("images/play.png"))));
-		}
-		catch(IOException ioe)
-		{
-			ioe.printStackTrace();
-		}
-		try
-		{
 			ok.setIcon(new ImageIcon(ImageIO.read(new File("images/ok.png"))));
-		}
-		catch(IOException ioe)
-		{
-			ioe.printStackTrace();
-		}
-		try
-		{
 			cancel.setIcon(new ImageIcon(ImageIO.read(new File("images/cancel.png"))));
 		}
 		catch(IOException ioe)
 		{
-			ioe.printStackTrace();
+			try 
+			{
+				previewStart.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/play.png"))));
+				previewEnd.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/play.png"))));
+				ok.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/ok.png"))));
+				cancel.setIcon(new ImageIcon(ImageIO.read(new URL("http://jpowerhour.sourceforge.net/images/cancel.png"))));
+			} 
+			catch (MalformedURLException e) 
+			{
+			} 
+			catch (IOException e) 
+			{
+			}
 		}
 		
 		buttonPanel.add(previewStart);
@@ -168,7 +160,7 @@ public class EditSongPanel extends JPanel implements ActionListener
 		long oldstart = song.getStartTime();	
 		int oldlength = song.getPlayLength();
 		
-		song.setPlayLength(10);
+		song.setPlayLength(6);
 		song.setStartPos(startSlider.getValue()*1000+(durationSlider.getValue()-10)*1000);
 		previewStart.setEnabled(false);
 		try 
@@ -205,7 +197,7 @@ public class EditSongPanel extends JPanel implements ActionListener
 		long oldstart = song.getStartTime();	
 		int oldlength = song.getPlayLength();
 		
-		song.setPlayLength(10);
+		song.setPlayLength(6);
 		song.setStartPos(startSlider.getValue()*1000);
 		previewStart.setEnabled(false);
 		try 
