@@ -1,12 +1,15 @@
 package net.charliemeyer.jpowerhour.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -15,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -231,9 +235,40 @@ public class JPowerHourGUI implements ActionListener
 		panel.show();
 	}
 
-	private void handleOnlineHelpAction() {
-		// TODO Auto-generated method stub
-		
+	private void handleOnlineHelpAction() 
+	{
+		String url = "http://jpowerhour.sourceforge.net";
+		if (Desktop.isDesktopSupported()) 
+		{
+            Desktop desktop = Desktop.getDesktop();
+            if (desktop.isSupported(Desktop.Action.BROWSE)) 
+            {
+            	URI uri = null;
+                try 
+                {
+                    uri = new URI(url);
+                    desktop.browse(uri);
+                }
+                catch(IOException ioe) 
+                {
+                    ioe.printStackTrace();
+                }
+                catch(URISyntaxException use) 
+                {
+                    use.printStackTrace();
+                }
+            }
+            else
+            {
+            	String message = "Please visit "+url;
+            	JOptionPane.showMessageDialog(frame, message, "Help", JOptionPane.INFORMATION_MESSAGE);
+            }
+		}
+		else
+        {
+        	String message = "Please visit "+url;
+        	JOptionPane.showMessageDialog(frame, message, "Help", JOptionPane.INFORMATION_MESSAGE);
+        }
 	}
 
 	private void handleSaveAsAction() 

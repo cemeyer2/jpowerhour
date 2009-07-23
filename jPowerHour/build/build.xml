@@ -7,7 +7,7 @@
                    
      chuck                                                                
      ====================================================================== -->
-<project name="jPowerHour" default="dist">
+<project name="jPowerHour" default="jar">
     <description>
             jPower Hour Build File
     </description>
