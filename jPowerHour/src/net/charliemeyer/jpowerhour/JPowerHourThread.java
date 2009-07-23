@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import net.charliemeyer.jpowerhour.player.JPowerHourPlayer;
 
-public class PowerHourThread implements Runnable 
+public class JPowerHourThread implements Runnable 
 {
 	private ArrayList<JPowerHourSong> songs;
 	private int currentlyPlayingSong = 0;
@@ -15,7 +15,7 @@ public class PowerHourThread implements Runnable
 	private JPowerHourSong currentlyPlaying;
 	private ArrayList<JPowerHourPlayer> players;
 
-	public PowerHourThread()
+	public JPowerHourThread()
 	{
 		this.songs = new ArrayList<JPowerHourSong>();
 		listeners = new ArrayList<JPowerHourListener>();

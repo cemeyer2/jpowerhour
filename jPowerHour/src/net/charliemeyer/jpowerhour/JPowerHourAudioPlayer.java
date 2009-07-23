@@ -1,6 +1,7 @@
 package net.charliemeyer.jpowerhour;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Map;
 
 import javazoom.jlgui.basicplayer.BasicController;

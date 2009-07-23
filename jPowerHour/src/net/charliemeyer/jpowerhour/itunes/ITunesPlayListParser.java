@@ -12,7 +12,7 @@ public class ITunesPlayListParser
 {
 	private static Library getITunesLibrary()
 	{
-		File libraryFile = ITunesUtils.getItunesLibrary();
+		File libraryFile = ITunesUtils.getITunesLibrary();
 		if(libraryFile != null)
 		{
 			Library library = new Library(libraryFile);

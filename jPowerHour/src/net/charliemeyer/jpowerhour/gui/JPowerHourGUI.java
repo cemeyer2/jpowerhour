@@ -22,7 +22,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import net.charliemeyer.jpowerhour.JPowerHourSong;
-import net.charliemeyer.jpowerhour.PowerHourThread;
+import net.charliemeyer.jpowerhour.JPowerHourThread;
 import net.charliemeyer.jpowerhour.gui.itunes.ITunesPlaylistImportPanel;
 import net.charliemeyer.jpowerhour.gui.panels.AboutPanel;
 import net.charliemeyer.jpowerhour.gui.panels.LowerButtonPanel;
@@ -43,7 +43,7 @@ public class JPowerHourGUI implements ActionListener
 	private SongListPanel songListPanel;
 	private LowerButtonPanel lowerButtonPanel;
 	private UpperStatusPanel upperStatusPanel;
-	private PowerHourThread thread;
+	private JPowerHourThread thread;
 	private File currentlyLoadedFile;
 	private ListPlayersPanel listPlayersPanel;
 	
@@ -54,7 +54,7 @@ public class JPowerHourGUI implements ActionListener
 	
 	public JPowerHourGUI()
 	{
-		thread = new PowerHourThread();
+		thread = new JPowerHourThread();
 		listPlayersPanel = new ListPlayersPanel();
 		
 		frame = new JPowerHourFrame("jPowerHour");
@@ -153,7 +153,7 @@ public class JPowerHourGUI implements ActionListener
 		return lowerButtonPanel;
 	}
 	
-	public PowerHourThread getPowerHourThread()
+	public JPowerHourThread getPowerHourThread()
 	{
 		return thread;
 	}

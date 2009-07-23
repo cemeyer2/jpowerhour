@@ -10,7 +10,7 @@ import net.charliemeyer.jpowerhour.gui.util.ITunesLibraryFileFilter;
 
 public class ITunesUtils 
 {
-	public static File getItunesLibrary()
+	public static File getITunesLibrary()
 	{
 		String os = System.getProperty("os.name");
 		
@@ -46,7 +46,7 @@ public class ITunesUtils
 			}
 			return promptForITunesLibrary();
 		}
-		else if(os.startsWith("Windows Vista"))
+		else if(os.startsWith("Windows")) //vista is "Windows Vista", dont know what Windows 7 is but ill assume it starts with Windows and uses the same dir structure
 		{
 			File iTunesDir = new File(System.getProperty("user.home")+File.separator+"Music"+File.separator+"iTunes");
 			if(!iTunesDir.exists())

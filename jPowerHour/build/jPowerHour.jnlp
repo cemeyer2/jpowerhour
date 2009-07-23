@@ -9,8 +9,6 @@
   <description>jPowerHour</description>
   <icon href="../images/beer.png"/>
 </information>
-
-<offline-allowed/>
 <security>
   <all-permissions/>
 </security>
