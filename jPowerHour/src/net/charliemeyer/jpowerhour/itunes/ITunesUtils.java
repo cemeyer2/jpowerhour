@@ -1,6 +1,7 @@
 package net.charliemeyer.jpowerhour.itunes;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -32,6 +33,22 @@ public class ITunesUtils
 		else if(os.startsWith("Windows XP"))
 		{
 			File iTunesDir = new File(System.getProperty("user.home")+File.separator+"My Documents"+File.separator+"My Music"+File.separator+"iTunes");
+			if(!iTunesDir.exists())
+			{
+				return promptForITunesLibrary();
+			}
+			for(File f : iTunesDir.listFiles())
+			{
+				if(f.getName().equals("iTunes Music Library.xml"))
+				{
+					return f;
+				}
+			}
+			return promptForITunesLibrary();
+		}
+		else if(os.startsWith("Windows Vista"))
+		{
+			File iTunesDir = new File(System.getProperty("user.home")+File.separator+"Music"+File.separator+"iTunes");
 			if(!iTunesDir.exists())
 			{
 				return promptForITunesLibrary();
