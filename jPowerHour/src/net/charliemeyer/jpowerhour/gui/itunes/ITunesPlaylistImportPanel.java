@@ -32,6 +32,7 @@ public class ITunesPlaylistImportPanel extends JPanel implements ActionListener
 	JButton importPlaylist, cancel;
 	JPowerHourFrame frame;
 	JPowerHourGUI parent;
+	boolean disableShow = false;
 	
 	public ITunesPlaylistImportPanel(JPowerHourGUI parent)
 	{
@@ -76,15 +77,29 @@ public class ITunesPlaylistImportPanel extends JPanel implements ActionListener
 	private void loadPlaylists()
 	{
 		Collection<Playlist> playlists = ITunesPlayListParser.getITunesPlaylists();
-		for(Playlist playlist : playlists)
+		if(playlists == null)
 		{
-			model.addElement(playlist);
+			disableShow = true;
+		}
+		else
+		{
+			for(Playlist playlist : playlists)
+			{
+				model.addElement(playlist);
+			}
 		}
 	}
 	
 	public void show()
 	{
-		frame.setVisible(true);
+		if(disableShow)
+		{
+			frame.dispose();
+		}
+		else
+		{
+			frame.setVisible(true);
+		}
 	}
 	
 

@@ -21,6 +21,7 @@
   <jar href="commons-logging-1.1.1.jar"/>
   <jar href="commons-logging-adapters-1.1.1.jar"/>
   <jar href="commons-logging-api-1.1.1.jar"/>
+  <jar href="iTunesChecker.jar"/>
   <jar href="jargs.jar"/>
   <jar href="jaxen-core.jar"/>
   <jar href="jaxen-jdom.jar"/>

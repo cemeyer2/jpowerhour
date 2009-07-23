@@ -17,10 +17,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import net.charliemeyer.jpowerhour.gui.util.JPowerHourFrame;
+
 public class AboutPanel extends JPanel implements MouseListener
 {
 	JLabel url, name;
-	JFrame frame;
+	JPowerHourFrame frame;
 	
 	public AboutPanel()
 	{
@@ -41,16 +43,8 @@ public class AboutPanel extends JPanel implements MouseListener
 		
 		setSize(dim);
 		
-		frame = new JFrame("About");
+		frame = new JPowerHourFrame("About");
 		
-		try
-		{
-			frame.setIconImage(ImageIO.read(new File("images/beer.png"))); 
-		}
-		catch(IOException ioe)
-		{
-			ioe.printStackTrace();
-		}
 		frame.setSize(dim);
 		frame.setContentPane(this);
 	}

@@ -1,7 +1,6 @@
 package net.charliemeyer.jpowerhour.itunes;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -46,7 +45,8 @@ public class ITunesUtils
 			}
 			return promptForITunesLibrary();
 		}
-		return promptForITunesLibrary();
+		JOptionPane.showMessageDialog(null, "Error: iTunes is not supported on the "+os+" platform", "Error", JOptionPane.ERROR_MESSAGE);
+		return null;
 	}
 	
 	private static File promptForITunesLibrary()
@@ -67,10 +67,5 @@ public class ITunesUtils
 		{
 			return null;
 		}
-	}
-	
-	public static void main(String[] args) throws IOException
-	{
-		System.out.println(getItunesLibrary());
 	}
 }

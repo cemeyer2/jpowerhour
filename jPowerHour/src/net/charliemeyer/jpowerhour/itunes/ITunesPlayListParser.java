@@ -24,6 +24,10 @@ public class ITunesPlayListParser
 	public static Collection<Playlist> getITunesPlaylists()
 	{
 		Library library = getITunesLibrary();
+		if(library == null)
+		{
+			return null;
+		}
 		Collection<Playlist> playlists = library.getPlaylists();
 		return playlists;
 	}
