@@ -1,6 +1,7 @@
 package net.charliemeyer.jpowerhour.itunes;
 
 import java.io.File;
+import java.io.IOException;
 
 public class ITunesUtils 
 {
@@ -11,7 +12,7 @@ public class ITunesUtils
 		
 		if(os.startsWith("Mac OS X"))
 		{
-			File iTunesDir = new File(System.getProperty("user.home")+File.pathSeparator+"Music"+File.pathSeparator+"iTunes");
+			File iTunesDir = new File(System.getProperty("user.home")+File.separator+"Music"+File.separator+"iTunes");
 			if(!iTunesDir.exists())
 			{
 				return null;
@@ -29,11 +30,10 @@ public class ITunesUtils
 		{
 			//find itunes windows
 		}
-		
 		return null;
 	}
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
 		System.out.println(getItunesLibrary());
 	}
