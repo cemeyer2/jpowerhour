@@ -61,6 +61,7 @@ public class JPowerHourGUI implements ActionListener
 		listPlayersPanel = new ListPlayersPanel();
 		manageInterludesPanel = new ManageInterludesPanel();
 		thread.addPowerHourListener(manageInterludesPanel);
+		thread.addPowerHourListener(listPlayersPanel);
 		
 		frame = new JPowerHourFrame("jPowerHour");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

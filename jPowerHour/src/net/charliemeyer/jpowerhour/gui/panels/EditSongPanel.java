@@ -2,20 +2,13 @@ package net.charliemeyer.jpowerhour.gui.panels;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
@@ -23,13 +16,14 @@ import javax.swing.SwingConstants;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.gui.util.JButtonIconizer;
+import net.charliemeyer.jpowerhour.gui.util.JPowerHourFrame;
 
 public class EditSongPanel extends JPanel implements ActionListener
 {
 	private JPowerHourSong song;
 	private JSlider startSlider, durationSlider;
 	private JButton previewStart, previewEnd, ok, cancel;
-	private JFrame frame;
+	private JPowerHourFrame frame;
 	
 	public EditSongPanel(JPowerHourSong song)
 	{
@@ -91,22 +85,10 @@ public class EditSongPanel extends JPanel implements ActionListener
 		Dimension dim = new Dimension(600,450);
 		setSize(dim);
 		
-		frame = new JFrame("Edit Song: "+song.toString());
+		frame = new JPowerHourFrame("Edit Song: "+song.toString());
 		frame.setSize(dim);
 		frame.setContentPane(this);
-		Image image = null;
-		try
-		{
-			image = ImageIO.read(new File("images/beer.png"));
-		}
-		catch(IOException ioe)
-		{
-			ioe.printStackTrace();
-		}
-		if(image != null)
-		{
-			frame.setIconImage(image);
-		}
+		
 	}
 	
 	public void show()
@@ -151,6 +133,8 @@ public class EditSongPanel extends JPanel implements ActionListener
 		} 
 		catch (BasicPlayerException e) 
 		{
+			String message = "Unable to get audio device, please quit all programs that may be using the audio device";
+			JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 		previewStart.setEnabled(true);
@@ -188,6 +172,8 @@ public class EditSongPanel extends JPanel implements ActionListener
 		} 
 		catch (BasicPlayerException e) 
 		{
+			String message = "Unable to get audio device, please quit all programs that may be using the audio device";
+			JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 		previewStart.setEnabled(true);

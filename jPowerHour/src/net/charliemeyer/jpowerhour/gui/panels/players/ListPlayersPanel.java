@@ -9,29 +9,26 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 
+import net.charliemeyer.jpowerhour.JPowerHourListener;
+import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.gui.util.JButtonIconizer;
 import net.charliemeyer.jpowerhour.gui.util.JPowerHourFrame;
 import net.charliemeyer.jpowerhour.player.JPowerHourPlayer;
 
-public class ListPlayersPanel extends JPanel implements ActionListener, WindowListener, MouseListener
+public class ListPlayersPanel extends JPanel implements ActionListener, WindowListener, MouseListener, JPowerHourListener
 {
-	JList list;
-	JButton add,remove, close;
-	DefaultListModel listModel;
-	JPowerHourFrame frame;
+	private JList list;
+	private JButton add,remove, close;
+	private DefaultListModel listModel;
+	private JPowerHourFrame frame;
+	private boolean isRunningPowerHour = false;
 	
 	public ListPlayersPanel()
 	{
@@ -185,7 +182,7 @@ public class ListPlayersPanel extends JPanel implements ActionListener, WindowLi
 	public void mouseClicked(MouseEvent event) 
 	{
 		int count = event.getClickCount();
-		if(count > 1)
+		if(count > 1 && !isRunningPowerHour)
 		{
 			int index = list.locationToIndex(event.getPoint());
 			if(index != -1)
@@ -215,6 +212,39 @@ public class ListPlayersPanel extends JPanel implements ActionListener, WindowLi
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void powerHourFinished() {
+		add.setEnabled(true);
+		remove.setEnabled(true);
+		isRunningPowerHour = false;
+	}
+
+	@Override
+	public void powerHourPaused() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void powerHourResumed() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void powerHourStarted() {
+		add.setEnabled(false);
+		remove.setEnabled(false);
+		isRunningPowerHour = true;
+	}
+
+	@Override
+	public void songChange(JPowerHourSong currentlyPlaying,
+			int currentlyPlayingNumber) {
 		// TODO Auto-generated method stub
 		
 	}
