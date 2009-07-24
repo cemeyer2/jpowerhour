@@ -223,11 +223,7 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 	}
 
 	private void handlePlayAction() {
-		add.setEnabled(false);
-		remove.setEnabled(false);
-		up.setEnabled(false);
-		down.setEnabled(false);
-		play.setEnabled(false);
+		
 		parent.runPowerHour();
 		
 	}
@@ -238,7 +234,8 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 		remove.setEnabled(true);
 		up.setEnabled(true);
 		down.setEnabled(true);
-		play.setEnabled(true);		
+		play.setEnabled(true);	
+		addFolder.setEnabled(true);
 	}
 
 	@Override
@@ -261,8 +258,13 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 	}
 
 	@Override
-	public void powerHourStarted() {
-		// TODO Auto-generated method stub
-		
+	public void powerHourStarted() 
+	{
+		add.setEnabled(false);
+		remove.setEnabled(false);
+		up.setEnabled(false);
+		down.setEnabled(false);
+		play.setEnabled(false);
+		addFolder.setEnabled(false);
 	}
 }
