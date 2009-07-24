@@ -21,11 +21,13 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import net.charliemeyer.jpowerhour.JPowerHourInterlude;
 import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.JPowerHourThread;
 import net.charliemeyer.jpowerhour.gui.itunes.ITunesPlaylistImportPanel;
 import net.charliemeyer.jpowerhour.gui.panels.AboutPanel;
 import net.charliemeyer.jpowerhour.gui.panels.LowerButtonPanel;
+import net.charliemeyer.jpowerhour.gui.panels.ManageInterludesPanel;
 import net.charliemeyer.jpowerhour.gui.panels.SongListPanel;
 import net.charliemeyer.jpowerhour.gui.panels.UpperStatusPanel;
 import net.charliemeyer.jpowerhour.gui.panels.players.ListPlayersPanel;
@@ -46,6 +48,7 @@ public class JPowerHourGUI implements ActionListener
 	private JPowerHourThread thread;
 	private File currentlyLoadedFile;
 	private ListPlayersPanel listPlayersPanel;
+	private ManageInterludesPanel manageInterludesPanel;
 	
 	private final int GUI_WIDTH = 400;
 	private final int GUI_HEIGHT = 800;
@@ -56,6 +59,8 @@ public class JPowerHourGUI implements ActionListener
 	{
 		thread = new JPowerHourThread();
 		listPlayersPanel = new ListPlayersPanel();
+		manageInterludesPanel = new ManageInterludesPanel();
+		thread.addPowerHourListener(manageInterludesPanel);
 		
 		frame = new JPowerHourFrame("jPowerHour");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -158,6 +163,11 @@ public class JPowerHourGUI implements ActionListener
 		return thread;
 	}
 	
+	public ManageInterludesPanel getManageInterludesPanel()
+	{
+		return manageInterludesPanel;
+	}
+	
 	public void runPowerHour()
 	{
 		thread.clearPlayers();
@@ -170,7 +180,14 @@ public class JPowerHourGUI implements ActionListener
 		{
 			songs.add(getSongListPanel().getPowerHourSong(i));
 		}
+		ArrayList<JPowerHourInterlude> interludes = new ArrayList<JPowerHourInterlude>();
+		for(int i = 0; i < getManageInterludesPanel().getInterludeCount(); i++)
+		{
+			interludes.add(getManageInterludesPanel().getInterlude(i));
+		}
+		
 		thread.setSongs(songs);
+		thread.setInterludes(interludes);
 		Thread th = new Thread(thread);
 		th.start();
 	}
@@ -218,8 +235,7 @@ public class JPowerHourGUI implements ActionListener
 	}
 
 	private void handleManageInterludesAction() {
-		// TODO Auto-generated method stub
-		
+		manageInterludesPanel.show();
 	}
 
 	private void handleManagePlayersAction() {
@@ -274,6 +290,12 @@ public class JPowerHourGUI implements ActionListener
 		{
 			songs.add(getSongListPanel().getPowerHourSong(i));
 		}
+		ArrayList<JPowerHourInterlude> interludes = new ArrayList<JPowerHourInterlude>();
+		for(int i = 0; i < getManageInterludesPanel().getInterludeCount(); i++)
+		{
+			interludes.add(getManageInterludesPanel().getInterlude(i));
+		}
+		
 		JFileChooser chooser = new JFileChooser();		
 		chooser.setFileFilter(new JPowerHourPlaylistFilter());
 		int retval = chooser.showSaveDialog(frame);
@@ -283,7 +305,7 @@ public class JPowerHourGUI implements ActionListener
             File file = chooser.getSelectedFile();
             try 
             {
-				SavePlaylist.savePlaylist(songs, file);
+				SavePlaylist.savePlaylist(songs, interludes, file);
 			} 
             catch (IOException e) 
             {
@@ -305,9 +327,14 @@ public class JPowerHourGUI implements ActionListener
 			{
 				songs.add(getSongListPanel().getPowerHourSong(i));
 			}
+			ArrayList<JPowerHourInterlude> interludes = new ArrayList<JPowerHourInterlude>();
+			for(int i = 0; i < getManageInterludesPanel().getInterludeCount(); i++)
+			{
+				interludes.add(getManageInterludesPanel().getInterlude(i));
+			}
 			try 
 			{
-				SavePlaylist.savePlaylist(songs, currentlyLoadedFile);
+				SavePlaylist.savePlaylist(songs, interludes, currentlyLoadedFile);
 			} 
 			catch (IOException e) 
 			{
@@ -332,11 +359,17 @@ public class JPowerHourGUI implements ActionListener
             File file = chooser.getSelectedFile();
             try 
             {
-				ArrayList<JPowerHourSong> songs = LoadPlaylist.loadPlaylist(file);
+				ArrayList<JPowerHourSong> songs = LoadPlaylist.loadPlaylistSongs(file);
 				songListPanel.clearSongs();
 				for(JPowerHourSong song : songs)
 				{
 					songListPanel.addPowerHourSong(song);
+				}
+				ArrayList<JPowerHourInterlude> interludes = LoadPlaylist.loadPlaylistInterludes(file);
+				manageInterludesPanel.clearInterludes();
+				for(JPowerHourInterlude interlude : interludes)
+				{
+					manageInterludesPanel.addInterlude(interlude);
 				}
 				currentlyLoadedFile = file;
 			} 

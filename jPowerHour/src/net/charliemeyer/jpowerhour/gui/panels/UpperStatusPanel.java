@@ -108,7 +108,7 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 			String str = mins+":"+((secs < 10)?"0"+secs : secs);
 			
 			//this.progress.setValue(progress);
-			this.progress.setValue((int) pos);
+			this.progress.setValue((int) (pos+start));
 			this.progress.setString(str);
 		}
 		

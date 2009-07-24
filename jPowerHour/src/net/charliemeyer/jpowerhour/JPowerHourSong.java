@@ -167,4 +167,20 @@ public class JPowerHourSong implements BasicPlayerListener
 	{
 		return songFile;
 	}
+
+	public boolean isShortFile() {
+		return shortFile;
+	}
+
+	public void setShortFile(boolean shortFile) {
+		this.shortFile = shortFile;
+	}
+
+	public void setArtist(String artist) {
+		this.artist = artist;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 }

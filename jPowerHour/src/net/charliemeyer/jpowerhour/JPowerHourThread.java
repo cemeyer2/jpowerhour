@@ -10,6 +10,7 @@ import net.charliemeyer.jpowerhour.player.JPowerHourPlayer;
 public class JPowerHourThread implements Runnable 
 {
 	private ArrayList<JPowerHourSong> songs;
+	private ArrayList<JPowerHourInterlude> interludes;
 	private int currentlyPlayingSong = 0;
 	private ArrayList<JPowerHourListener> listeners;
 	private JPowerHourSong currentlyPlaying;
@@ -20,6 +21,7 @@ public class JPowerHourThread implements Runnable
 		this.songs = new ArrayList<JPowerHourSong>();
 		listeners = new ArrayList<JPowerHourListener>();
 		players = new ArrayList<JPowerHourPlayer>();
+		interludes = new ArrayList<JPowerHourInterlude>();
 	}
 
 	public void addPowerHourListener(JPowerHourListener listener)
@@ -52,6 +54,11 @@ public class JPowerHourThread implements Runnable
 	{
 		this.songs = songs;
 	}
+	
+	public void setInterludes(ArrayList<JPowerHourInterlude> interludes)
+	{
+		this.interludes = interludes;
+	}
 
 	@Override
 	public void run() 
@@ -75,6 +82,11 @@ public class JPowerHourThread implements Runnable
 
 
 				song.playSong();
+				
+				int rand = (int)((interludes.size()*Math.random())-1);
+				JPowerHourInterlude interlude = interludes.get(rand);
+				
+				interlude.playSong();
 			}
 
 		} 

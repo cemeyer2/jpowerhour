@@ -31,7 +31,7 @@ public class MusicFilter extends FileFilter
 	@Override
 	public String getDescription() 
 	{
-		return "MP3 Files";
+		return "MP3 and WAV Files";
 	}
 
 }
