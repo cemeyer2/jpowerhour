@@ -21,6 +21,8 @@ public class Extension
 		if (i > 0 &&  i < s.length() - 1) {
 			ext = s.substring(i+1).toLowerCase();
 		}
+		if(ext == null)
+			ext = "";
 		return ext;
 	}
 
