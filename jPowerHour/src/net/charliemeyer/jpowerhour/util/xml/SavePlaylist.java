@@ -38,7 +38,7 @@ public class SavePlaylist
 				e.printStackTrace();
 			}
         	songElement.setAttribute("start",song.getStartTime()+"");
-        	songElement.setAttribute("length", song.getPlayLength()+"");
+        	songElement.setAttribute("length", song.getPlayLengthMs()+"");
         	root.addContent(songElement);
         }
         

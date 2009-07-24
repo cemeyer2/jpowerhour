@@ -95,7 +95,7 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 		if(currentlyPlayingSong != null)
 		{
 			long start = currentlyPlayingSong.getStartTime();
-			long end = start + currentlyPlayingSong.getPlayLength()*1000;
+			long end = start + currentlyPlayingSong.getPlayLengthMs();
 			long pos = microseconds / 1000;
 			int progress = (int) (((double)(pos)/(double)(end-start))*100);
 			
@@ -107,7 +107,8 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 			
 			String str = mins+":"+((secs < 10)?"0"+secs : secs);
 			
-			this.progress.setValue(progress);
+			//this.progress.setValue(progress);
+			this.progress.setValue((int) pos);
 			this.progress.setString(str);
 		}
 		
@@ -143,15 +144,23 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 	{
 		currentlyPlayingSong = currentlyPlaying;
 		long start = currentlyPlaying.getStartTime();
-		int duration = currentlyPlaying.getPlayLength();
+		long duration = currentlyPlaying.getPlayLengthMs();
 		
 		int startTotalSeconds = (int) (start/1000);
 		int startMins = startTotalSeconds / 60;
 		int startSecs = startTotalSeconds % 60;
 		
-		int endTotalSeconds = startTotalSeconds + duration;
+		int endTotalSeconds = startTotalSeconds + (int)(duration/1000);
 		int endMins = endTotalSeconds / 60;
 		int endSecs = endTotalSeconds % 60;
+		
+//		System.out.println(currentlyPlaying.getSongFile().getName());
+//		System.out.println("start: "+start);
+//		System.out.println("duration: "+duration);
+//		System.out.println();
+		
+		this.progress.setMinimum((int) currentlyPlaying.getStartTime());
+		this.progress.setMaximum((int) (currentlyPlaying.getStartTime()+currentlyPlaying.getPlayLengthMs()));
 		
 		String startStr = startMins+":"+((startSecs < 10)?"0"+startSecs : startSecs);
 		String endStr = endMins+":"+((endSecs < 10)?"0"+endSecs : endSecs);

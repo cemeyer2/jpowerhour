@@ -56,7 +56,7 @@ public class EditSongPanel extends JPanel implements ActionListener
 		durationSlider.setMaximum(120);
 		durationSlider.setPaintTicks(true);
 		durationSlider.setPaintLabels(true);
-		durationSlider.setValue(song.getPlayLength());
+		durationSlider.setValue((int)(song.getPlayLengthMs()/1000));
 
 		
 		JPanel buttonPanel = new JPanel();
@@ -140,9 +140,9 @@ public class EditSongPanel extends JPanel implements ActionListener
 	private void handlePreviewEndAction() 
 	{
 		long oldstart = song.getStartTime();	
-		int oldlength = song.getPlayLength();
+		long oldlength = song.getPlayLengthMs();
 		
-		song.setPlayLength(6);
+		song.setPlayLengthMs(6000);
 		song.setStartPos(startSlider.getValue()*1000+(durationSlider.getValue()-10)*1000);
 		previewStart.setEnabled(false);
 		try 
@@ -154,7 +154,7 @@ public class EditSongPanel extends JPanel implements ActionListener
 			e.printStackTrace();
 		}
 		previewStart.setEnabled(true);
-		song.setPlayLength(oldlength);
+		song.setPlayLengthMs(oldlength);
 		song.setStartPos(oldstart);
 	}
 
@@ -169,7 +169,7 @@ public class EditSongPanel extends JPanel implements ActionListener
 		int start = startSlider.getValue();
 		int length = durationSlider.getValue();
 		
-		song.setPlayLength(length);
+		song.setPlayLengthMs(length*1000);
 		song.setStartPos(start*1000);
 		frame.setVisible(false);
 	}
@@ -177,9 +177,9 @@ public class EditSongPanel extends JPanel implements ActionListener
 	private void handlePreviewStartAction() 
 	{
 		long oldstart = song.getStartTime();	
-		int oldlength = song.getPlayLength();
+		long oldlength = song.getPlayLengthMs();
 		
-		song.setPlayLength(6);
+		song.setPlayLengthMs(6000);
 		song.setStartPos(startSlider.getValue()*1000);
 		previewStart.setEnabled(false);
 		try 
@@ -191,7 +191,7 @@ public class EditSongPanel extends JPanel implements ActionListener
 			e.printStackTrace();
 		}
 		previewStart.setEnabled(true);
-		song.setPlayLength(oldlength);
+		song.setPlayLengthMs(oldlength);
 		song.setStartPos(oldstart);
 	}
 }

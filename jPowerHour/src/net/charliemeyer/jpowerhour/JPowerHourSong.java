@@ -12,10 +12,11 @@ public class JPowerHourSong implements BasicPlayerListener
 {
 	private long startTime;
 	private File songFile;
-	private int playLength;
+	private long playLength;
 	private long durationMs;
 	private String artist, title;
 	Object lock;
+	private boolean shortFile = false; //hack
 	
 	public JPowerHourSong(File songFile) throws BasicPlayerException
 	{
@@ -23,7 +24,7 @@ public class JPowerHourSong implements BasicPlayerListener
 		
 		this.songFile = songFile;
 		this.startTime = 0;
-		this.playLength = 60;
+		this.playLength = 60*1000;
 		
 		JPowerHourAudioPlayer player = JPowerHourAudioPlayer.getJPowerHourPlayer();
 		player.stop();
@@ -31,6 +32,16 @@ public class JPowerHourSong implements BasicPlayerListener
 		durationMs = player.getSongLengthInMs();
 		artist = player.getArtist();
 		title = player.getTitle();
+		
+		//if the song is less than 1 minute, make the play length the song length
+		if(durationMs < playLength)
+		{
+			playLength = durationMs;
+		}
+		if(durationMs < 5000)
+		{
+			shortFile = true;
+		}
 	}
 	
 	public void setStartPos(int mins, int sec)
@@ -42,7 +53,7 @@ public class JPowerHourSong implements BasicPlayerListener
 	
 	public void setStartPos(long ms)
 	{
-		long lengthMs = playLength * 1000;
+		long lengthMs = playLength;
 		//if the requested starting position doesnt leave enough room to play the requested length
 		//move the starting pos back playLength number of ms from the end of the song
 		if(ms+lengthMs > durationMs)
@@ -52,7 +63,7 @@ public class JPowerHourSong implements BasicPlayerListener
 		startTime = ms;
 	}
 	
-	public void setPlayLength(int length)
+	public void setPlayLengthMs(long length)
 	{
 		if(length < 1)
 		{
@@ -99,7 +110,7 @@ public class JPowerHourSong implements BasicPlayerListener
 		return title;
 	}
 	
-	public int getPlayLength()
+	public long getPlayLengthMs()
 	{
 		return playLength;
 	}
@@ -116,11 +127,14 @@ public class JPowerHourSong implements BasicPlayerListener
 
 	@Override
 	public void progress(int arg0, long microseconds, byte[] arg2, Map arg3) {
-		if(microseconds/1000 >= playLength*1000)
+		if(microseconds/1000 >= playLength)
 		{
 			synchronized(lock)
 			{
-				lock.notify();
+				if(!shortFile)
+				{
+					lock.notify();
+				}
 			}
 		}
 	}
@@ -131,8 +145,17 @@ public class JPowerHourSong implements BasicPlayerListener
 	}
 
 	@Override
-	public void stateUpdated(BasicPlayerEvent arg0) {
-		
+	public void stateUpdated(BasicPlayerEvent event) {
+		if(shortFile)
+		{
+			if(event.getCode()==BasicPlayerEvent.STOPPED)
+			{
+				synchronized(lock)
+				{
+					lock.notify();
+				}
+			}
+		}
 	}
 	
 	public long getDurationMs()

@@ -12,6 +12,8 @@
 <security>
   <all-permissions/>
 </security>
+<shortcut online="true"/>
+<desktop/>
 <resources>
   <j2se version="1.5+" />
   <jar href="ant.jar"/>

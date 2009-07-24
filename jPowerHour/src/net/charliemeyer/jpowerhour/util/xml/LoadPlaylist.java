@@ -37,7 +37,7 @@ public class LoadPlaylist
         	int index = songElement.getAttribute("index").getIntValue();
         	File file = new File(songElement.getAttribute("path").getValue());
         	long start = songElement.getAttribute("start").getLongValue();
-        	int length = songElement.getAttribute("length").getIntValue();
+        	long length = songElement.getAttribute("length").getLongValue();
         	
         	if(!file.exists())
         	{
@@ -56,7 +56,7 @@ public class LoadPlaylist
 	        	try 
 	        	{
 					JPowerHourSong song = new JPowerHourSong(file);
-					song.setPlayLength(length);
+					song.setPlayLengthMs(length);
 					song.setStartPos(start);
 					songs.add(index, song);
 				} 
