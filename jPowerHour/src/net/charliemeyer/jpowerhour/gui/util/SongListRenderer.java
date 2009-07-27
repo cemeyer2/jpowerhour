@@ -17,7 +17,6 @@ public class SongListRenderer extends JLabel implements ListCellRenderer
 
 
 
-	@Override
 	public Component getListCellRendererComponent(JList list, Object obj,
 			int pos, boolean isSelected, boolean cellHasFocus) 
 	{
@@ -52,7 +51,7 @@ public class SongListRenderer extends JLabel implements ListCellRenderer
 		}
 		setBorder(border);
 
-
+		this.setToolTipText("Double click to edit "+obj.toString());
 
 		return this;
 	}

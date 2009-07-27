@@ -179,7 +179,6 @@ public class JPowerHourAudioPlayer implements BasicPlayerListener
 		return "";
 	}
 
-	@Override
 	public void opened(Object arg0, Map properties) 
 	{
 		audioInfo = properties;
@@ -189,19 +188,16 @@ public class JPowerHourAudioPlayer implements BasicPlayerListener
 //		}
 	}
 
-	@Override
 	public void progress(int bytesRead, long microsecondsElapsed, byte[] pcmdata, Map properties) 
 	{
 		audioInfo = properties;
 	}
 
-	@Override
 	public void setController(BasicController arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void stateUpdated(BasicPlayerEvent arg0) {
 		// TODO Auto-generated method stub
 		

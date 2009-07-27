@@ -17,7 +17,6 @@ public class AlcoholPercentageListRenderer extends JLabel implements ListCellRen
 
 
 
-	@Override
 	public Component getListCellRendererComponent(JList list, Object obj,
 			int pos, boolean isSelected, boolean cellHasFocus) 
 	{

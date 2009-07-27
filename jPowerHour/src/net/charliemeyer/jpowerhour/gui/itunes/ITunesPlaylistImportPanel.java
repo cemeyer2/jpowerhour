@@ -103,7 +103,6 @@ public class ITunesPlaylistImportPanel extends JPanel implements ActionListener
 	}
 	
 
-	@Override
 	public void actionPerformed(ActionEvent event) 
 	{
 		Object source = event.getSource();

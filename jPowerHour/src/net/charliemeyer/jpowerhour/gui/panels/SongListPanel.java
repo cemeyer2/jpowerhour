@@ -95,7 +95,7 @@ public class SongListPanel extends JPanel implements MouseListener, JPowerHourLi
 		listModel.clear();
 	}
 
-	@Override
+
 	public void mouseClicked(MouseEvent event) 
 	{
 		if(isRunningPowerHour)
@@ -115,53 +115,53 @@ public class SongListPanel extends JPanel implements MouseListener, JPowerHourLi
 		}
 	}
 
-	@Override
+
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+
 	public void powerHourFinished() {
 		isRunningPowerHour = false;
 	}
 
-	@Override
+
 	public void powerHourPaused() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+
 	public void powerHourResumed() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+
 	public void powerHourStarted() {
 		isRunningPowerHour = true;
 	}
 
-	@Override
+
 	public void songChange(JPowerHourSong currentlyPlaying,
 			int currentlyPlayingNumber) {
 		// TODO Auto-generated method stub

@@ -15,7 +15,8 @@
 <shortcut online="true"/>
 <desktop/>
 <resources>
-  <j2se version="1.5+" />
+  <j2se version="1.6+" />
+  <jar href="jPowerHour.jar" />
   <jar href="ant.jar"/>
   <jar href="basicplayer3.0.jar"/>
   <jar href="commons-logging-1.1.1.jar"/>
@@ -38,7 +39,6 @@
   <jar href="xalan.jar"/>
   <jar href="xerces.jar"/>
   <jar href="xml-apis.jar"/>
-  <jar href="jPowerHour.jar"/>
 </resources>
 <application-desc main-class="net.charliemeyer.jpowerhour.gui.JPowerHourGUI" />
 </jnlp>

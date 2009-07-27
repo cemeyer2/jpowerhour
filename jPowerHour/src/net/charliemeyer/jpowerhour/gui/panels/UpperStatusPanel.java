@@ -84,12 +84,12 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 		th.start();
 	}
 
-	@Override
+
 	public void opened(Object arg0, Map arg1) {
 		progress.setValue(0);
 	}
 
-	@Override
+
 	public void progress(int arg0, long microseconds, byte[] arg2, Map arg3) 
 	{
 		if(currentlyPlayingSong != null)
@@ -115,31 +115,31 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 		
 	}
 
-	@Override
+
 	public void setController(BasicController arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+
 	public void stateUpdated(BasicPlayerEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+
 	public void powerHourPaused() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+
 	public void powerHourResumed() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+
 	public void songChange(JPowerHourSong currentlyPlaying, int currentlyPlayingNumber) 
 	{
 		currentlyPlayingSong = currentlyPlaying;
@@ -186,7 +186,7 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 		texts.add("Welcome to jPowerHour");
 	}
 
-	@Override
+
 	public void powerHourFinished() {
 		initializeTexts();
 		texts.add("Power Hour Complete!");
@@ -196,7 +196,7 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 		lowerRight.setText("0:00");
 	}
 
-	@Override
+
 	public void powerHourStarted() {
 		// TODO Auto-generated method stub
 		

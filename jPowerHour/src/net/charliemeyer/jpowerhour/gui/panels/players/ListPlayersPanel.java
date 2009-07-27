@@ -104,7 +104,6 @@ public class ListPlayersPanel extends JPanel implements ActionListener, WindowLi
 		listModel.addElement(player);
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent event) 
 	{
 		Object source = event.getSource();
@@ -137,48 +136,41 @@ public class ListPlayersPanel extends JPanel implements ActionListener, WindowLi
 		new AddEditPlayerPanel(this).show();
 	}
 
-	@Override
 	public void windowActivated(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void windowClosed(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void windowClosing(WindowEvent arg0) {
 		this.hide();
 	}
 
-	@Override
 	public void windowDeactivated(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void windowDeiconified(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void windowIconified(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void windowOpened(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void mouseClicked(MouseEvent event) 
 	{
 		int count = event.getClickCount();
@@ -192,57 +184,57 @@ public class ListPlayersPanel extends JPanel implements ActionListener, WindowLi
 		}
 	}
 
-	@Override
+	
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void powerHourFinished() {
 		add.setEnabled(true);
 		remove.setEnabled(true);
 		isRunningPowerHour = false;
 	}
 
-	@Override
+	
 	public void powerHourPaused() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void powerHourResumed() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void powerHourStarted() {
 		add.setEnabled(false);
 		remove.setEnabled(false);
 		isRunningPowerHour = true;
 	}
 
-	@Override
+	
 	public void songChange(JPowerHourSong currentlyPlaying,
 			int currentlyPlayingNumber) {
 		// TODO Auto-generated method stub

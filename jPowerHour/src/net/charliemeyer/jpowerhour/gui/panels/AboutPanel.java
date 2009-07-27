@@ -1,18 +1,11 @@
 package net.charliemeyer.jpowerhour.gui.panels;
 
 import java.awt.Cursor;
-import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -49,62 +42,57 @@ public class AboutPanel extends JPanel implements MouseListener
 		frame.setContentPane(this);
 	}
 
-	@Override
 	public void mouseClicked(MouseEvent event) 
 	{
-		String url = "";
-		if(event.getSource().equals(url))
-		{
-			url = "http://sourceforge.net/projects/jpowerhour/";
-		}
-		else if(event.getSource().equals(name))
-		{
-			url = "http://www.charliemeyer.net";
-		}
-		if (Desktop.isDesktopSupported()) 
-		{
-            Desktop desktop = Desktop.getDesktop();
-            if (desktop.isSupported(Desktop.Action.BROWSE)) 
-            {
-            	URI uri = null;
-                try 
-                {
-                    uri = new URI(url);
-                    desktop.browse(uri);
-                }
-                catch(IOException ioe) 
-                {
-                    ioe.printStackTrace();
-                }
-                catch(URISyntaxException use) 
-                {
-                    use.printStackTrace();
-                }
-            }
-		}
+//		String url = "";
+//		if(event.getSource().equals(url))
+//		{
+//			url = "http://sourceforge.net/projects/jpowerhour/";
+//		}
+//		else if(event.getSource().equals(name))
+//		{
+//			url = "http://www.charliemeyer.net";
+//		}
+//		if (Desktop.isDesktopSupported()) 
+//		{
+//            Desktop desktop = Desktop.getDesktop();
+//            if (desktop.isSupported(Desktop.Action.BROWSE)) 
+//            {
+//            	URI uri = null;
+//                try 
+//                {
+//                    uri = new URI(url);
+//                    desktop.browse(uri);
+//                }
+//                catch(IOException ioe) 
+//                {
+//                    ioe.printStackTrace();
+//                }
+//                catch(URISyntaxException use) 
+//                {
+//                    use.printStackTrace();
+//                }
+//            }
+//		}
 	}
 
-	@Override
 	public void mouseEntered(MouseEvent arg0) 
 	{
 		Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 		frame.setCursor(cursor);
 	}
 
-	@Override
 	public void mouseExited(MouseEvent arg0) 
 	{
 		Cursor cursor = Cursor.getDefaultCursor();
 		frame.setCursor(cursor);		
 	}
 
-	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		

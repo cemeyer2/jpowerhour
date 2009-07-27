@@ -80,7 +80,6 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 		add(stop);
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent event) 
 	{
 		Object source = event.getSource();
@@ -228,7 +227,6 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 		
 	}
 
-	@Override
 	public void powerHourFinished() {
 		add.setEnabled(true);
 		remove.setEnabled(true);
@@ -238,26 +236,22 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 		addFolder.setEnabled(true);
 	}
 
-	@Override
 	public void powerHourPaused() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void powerHourResumed() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void songChange(JPowerHourSong currentlyPlaying,
 			int currentlyPlayingNumber) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void powerHourStarted() 
 	{
 		add.setEnabled(false);

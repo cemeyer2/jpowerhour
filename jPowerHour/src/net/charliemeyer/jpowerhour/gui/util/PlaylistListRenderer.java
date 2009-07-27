@@ -19,7 +19,6 @@ public class PlaylistListRenderer extends JLabel implements ListCellRenderer
 
 
 
-	@Override
 	public Component getListCellRendererComponent(JList list, Object obj,
 			int pos, boolean isSelected, boolean cellHasFocus) 
 	{

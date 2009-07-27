@@ -92,34 +92,29 @@ public class JPowerHourPlayer implements JPowerHourListener
 	}
 
 
-	@Override
 	public void powerHourFinished() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	@Override
 	public void powerHourPaused() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	@Override
 	public void powerHourResumed() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	@Override
 	public void powerHourStarted() {
 		this.startDrinkingTime = System.currentTimeMillis();
 	}
 
 
-	@Override
 	public void songChange(JPowerHourSong currentlyPlaying,
 			int currentlyPlayingNumber) {
 		BeerShot shot = new BeerShot(shotGlassSize, alcholPercentage);

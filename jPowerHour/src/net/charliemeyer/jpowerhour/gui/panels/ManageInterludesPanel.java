@@ -136,49 +136,45 @@ public class ManageInterludesPanel extends JPanel implements WindowListener, Act
 		new ManageInterludesPanel().show();
 	}
 
-	@Override
+
 	public void windowActivated(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+
 	public void windowClosed(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+
 	public void windowClosing(WindowEvent event) 
 	{
 		hide();
 	}
 
-	@Override
+
 	public void windowDeactivated(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void windowDeiconified(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void windowIconified(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void windowOpened(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent event) 
 	{
 		Object source = event.getSource();
@@ -266,7 +262,6 @@ public class ManageInterludesPanel extends JPanel implements WindowListener, Act
 		this.hide();
 	}
 
-	@Override
 	public void powerHourFinished() 
 	{
 		play.setEnabled(true);
@@ -275,19 +270,16 @@ public class ManageInterludesPanel extends JPanel implements WindowListener, Act
 		reload.setEnabled(true);
 	}
 
-	@Override
 	public void powerHourPaused() 
 	{
 		
 	}
 
-	@Override
 	public void powerHourResumed()
 	{
 		
 	}
 
-	@Override
 	public void powerHourStarted() 
 	{
 		play.setEnabled(false);
@@ -296,7 +288,6 @@ public class ManageInterludesPanel extends JPanel implements WindowListener, Act
 		reload.setEnabled(false);
 	}
 
-	@Override
 	public void songChange(JPowerHourSong currentlyPlaying,
 			int currentlyPlayingNumber) {
 		// TODO Auto-generated method stub

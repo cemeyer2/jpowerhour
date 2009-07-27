@@ -7,18 +7,29 @@
                    
      chuck                                                                
      ====================================================================== -->
-<project name="jPowerHour" default="jar">
+<project name="jPowerHour" default="jar" xmlns:jw="org.unintelligible.antjnlpwar">
     <description>
             jPower Hour Build File
     </description>
+	
+	<taskdef name="izpack" classpath="/home/chuck/IzPack/lib/standalone-compiler.jar"
+	    classname="com.izforge.izpack.ant.IzPackTask"/>
+	
+	<typedef resource="org/unintelligible/antjnlpwar/antjnlpwar.xml" format="xml" uri="org.unintelligible.antjnlpwar">
+		<classpath>
+	    	<pathelement location="${basedir}/../lib/ant-jnlp-war-0.9.jar"/>
+	    </classpath>
+	</typedef>
 	
 	<target name="init">
 		<delete dir="build"/>
 		<delete dir="jar"/>
 		<delete dir="dist"/>
+		<delete dir="temp"/>
 		<mkdir dir="build"/>
 		<mkdir dir="jar"/>
 		<mkdir dir="dist"/>
+		<mkdir dir="temp"/>
 	</target>
 	
 	<path id="compile.classpath">
@@ -28,7 +39,8 @@
 	</path>
 	
 	<target name="compile" depends="init">
-		<javac srcdir="${basedir}/../src" destdir="build/" classpathref="compile.classpath"/>
+		<javac srcdir="${basedir}/../src" destdir="build/" classpathref="compile.classpath"
+		 target="1.5" />
 	</target>
 	
 	<target name="jar" depends="compile">
@@ -57,9 +69,35 @@
 
 	</target>
 	
-	<target name="dist" description="prepare for distribution">
-		
+	<target name="dist" description="prepare for distribution" depends="jar">
+		<izpack input="install-definition.xml"
+		        output="dist/jPowerHour-install.jar"
+		        installerType="standard"
+		        inheritAll="true"
+		        basedir="."
+		        compression="deflate"
+		        compressionlevel="9"/>
 	</target>
-		
+	
+	<target name="war" depends="jar">
+		<jw:jnlpwar
+		            tofile="dist/jPowerHour.war"
+		            codebase="http://jpowerhour.sourceforge.net"
+		            title="jPowerHour"
+		            vendor="Charlie Meyer"
+		            pack200="false"
+		            signStorepass="abc123"
+		            signAlias="alias">
+		                <jw:description>jPowerHour</jw:description>
+		                <jw:description kind="short">this is jPowerHour</jw:description>
+		                <jw:icon file="${basedir}/../images/beer.png"/>
+		                <jw:j2se minVersion="1.5">
+		                </jw:j2se>
+		                <lib dir="jar">
+		                    <include name="**/*.jar"/>
+		                </lib>
+		                <jw:application mainclass="net.charliemeyer.jpowerhour.gui.JPowerHourGUI" jar="lib/jPowerHour.jar"/>
+		        </jw:jnlpwar>
+	</target>
    
 </project>

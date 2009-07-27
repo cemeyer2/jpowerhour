@@ -120,12 +120,10 @@ public class JPowerHourSong implements BasicPlayerListener
 		return startTime;
 	}
 
-	@Override
 	public void opened(Object arg0, Map arg1) {
 		
 	}
 
-	@Override
 	public void progress(int arg0, long microseconds, byte[] arg2, Map arg3) {
 		if(microseconds/1000 >= playLength)
 		{
@@ -139,12 +137,10 @@ public class JPowerHourSong implements BasicPlayerListener
 		}
 	}
 
-	@Override
 	public void setController(BasicController arg0) {
 		
 	}
 
-	@Override
 	public void stateUpdated(BasicPlayerEvent event) {
 		if(shortFile)
 		{

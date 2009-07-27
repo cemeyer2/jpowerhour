@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<installation version="1.0">
+	<info>
+		<appname>jPowerHour</appname>
+        <appversion>0.1</appversion>
+        <uninstaller name="remove.task" path="${INSTALL_PATH}/Uninstall" write="yes"/>
+        <authors>
+			<author name="Charlie Meyer" email="charlie at charliemeyer dot net"/>
+		</authors>
+		
+		<url>http://jPowerHour.sourceforge.net/</url>
+        
+        <javaversion>1.5</javaversion>
+        
+        <run-privileged condition="izpack.windowsinstall|izpack.macinstall"/>
+	</info>
+	
+	<guiprefs width="600" height="480" resizable="no">
+        <laf name="kunststoff">
+        	<os family="unix" />
+        </laf>
+        <modifier key="useHeadingPanel" value="yes"/>
+        <modifier key="useHeadingForSummary" value="yes"/>
+		<modifier key="headingImageOnLeft" value="yes"/>
+        <modifier key="headingLineCount" value="2"/>
+        <modifier key="headingFontSize" value="1.5"/>
+        <modifier key="headingBackgroundColor" value="0x00ffffff"/>
+        <modifier key="headingPanelCounter" value="text"/>
+    	<modifier key="headingPanelCounterPos" value="inHeading"/>
+	</guiprefs>
+	
+	<locale>
+    	<langpack iso3="eng"/>
+	</locale>
+	
+	<panels>
+		<panel classname="HelloPanel"/>
+        <panel classname="HTMLInfoPanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="InstallationGroupPanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="SummaryPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="SimpleFinishPanel"/>
+	</panels>
+	
+	<packs>
+		<pack name="jPowerHour" required="yes">
+			<description>jPowerHour Installation Files</description>
+			<file src="jar" targetdir="$INSTALL_PATH/lib" override="true"></file>
+		</pack>
+	</packs>
+	
+</installation>

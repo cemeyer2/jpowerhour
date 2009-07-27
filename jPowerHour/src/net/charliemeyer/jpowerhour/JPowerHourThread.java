@@ -60,7 +60,6 @@ public class JPowerHourThread implements Runnable
 		this.interludes = interludes;
 	}
 
-	@Override
 	public void run() 
 	{
 		for(JPowerHourListener listener : listeners)
