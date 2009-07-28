@@ -24,10 +24,13 @@ public class EditSongPanel extends JPanel implements ActionListener
 	private JSlider startSlider, durationSlider;
 	private JButton previewStart, previewEnd, ok, cancel;
 	private JPowerHourFrame frame;
+	private SongListPanel parent;
 	
-	public EditSongPanel(JPowerHourSong song)
+	public EditSongPanel(JPowerHourSong song, SongListPanel parent)
 	{
 		this.song = song;
+		this.parent = parent;
+		
 		setLayout(new GridLayout(4,1));
 		JLabel title = new JLabel(song.toString(),SwingConstants.CENTER);
 		
@@ -155,6 +158,10 @@ public class EditSongPanel extends JPanel implements ActionListener
 		song.setPlayLengthMs(length*1000);
 		song.setStartPos(start*1000);
 		frame.setVisible(false);
+		
+		parent.setSaved(false);
+		
+		frame.dispose();
 	}
 
 	private void handlePreviewStartAction() 

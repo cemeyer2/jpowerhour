@@ -4,15 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -34,7 +36,7 @@ import net.charliemeyer.jpowerhour.util.xml.SavePlaylist;
 
 import org.jdom.JDOMException;
 
-public class JPowerHourGUI implements ActionListener
+public class JPowerHourGUI implements ActionListener, WindowListener
 {
 	private JPowerHourFrame frame;
 	private JPanel panel;
@@ -60,8 +62,8 @@ public class JPowerHourGUI implements ActionListener
 		thread.addPowerHourListener(listPlayersPanel);
 		
 		frame = new JPowerHourFrame("jPowerHour");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setJMenuBar(initializeMenuBar());
+		frame.addWindowListener(this);
 		
 		panel = new JPanel();
 		Dimension dim = new Dimension(GUI_WIDTH, GUI_HEIGHT);
@@ -302,6 +304,7 @@ public class JPowerHourGUI implements ActionListener
             try 
             {
 				SavePlaylist.savePlaylist(songs, interludes, file);
+				getSongListPanel().setSaved(true);
 			} 
             catch (IOException e) 
             {
@@ -331,6 +334,7 @@ public class JPowerHourGUI implements ActionListener
 			try 
 			{
 				SavePlaylist.savePlaylist(songs, interludes, currentlyLoadedFile);
+				getSongListPanel().setSaved(true);
 			} 
 			catch (IOException e) 
 			{
@@ -359,7 +363,7 @@ public class JPowerHourGUI implements ActionListener
 				songListPanel.clearSongs();
 				for(JPowerHourSong song : songs)
 				{
-					songListPanel.addPowerHourSong(song);
+					songListPanel.addPowerHourSong(song,true);
 				}
 				ArrayList<JPowerHourInterlude> interludes = LoadPlaylist.loadPlaylistInterludes(file);
 				manageInterludesPanel.clearInterludes();
@@ -392,5 +396,48 @@ public class JPowerHourGUI implements ActionListener
 	
 		JPowerHourGUI gui = new JPowerHourGUI();
 		gui.show();
+	}
+
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowClosing(WindowEvent arg0) {
+		boolean saved = getSongListPanel().isSaved();
+		if(saved == false)
+		{
+			String message = "Save Power Hour Before Quitting?";
+			int retval = JOptionPane.showConfirmDialog(frame, message, "Save?", JOptionPane.YES_NO_OPTION);
+			if(retval == JOptionPane.YES_OPTION)
+			{
+				handleSaveAction();
+			}
+		}
+	}
+
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

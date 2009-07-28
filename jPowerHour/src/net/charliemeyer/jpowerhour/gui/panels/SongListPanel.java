@@ -20,6 +20,7 @@ public class SongListPanel extends JPanel implements MouseListener, JPowerHourLi
 	private JList list;
 	private DefaultListModel listModel;
 	private boolean isRunningPowerHour = false;
+	private boolean saved = true;
 	
 	public SongListPanel(JPowerHourGUI parent)
 	{
@@ -39,9 +40,13 @@ public class SongListPanel extends JPanel implements MouseListener, JPowerHourLi
 		add(scrollPane, BorderLayout.CENTER);
 	}
 	
-	public void addPowerHourSong(JPowerHourSong song)
+	public void addPowerHourSong(JPowerHourSong song, boolean fromOpen)
 	{
 		listModel.addElement(song);
+		if(fromOpen == false)
+		{
+			setSaved(false);
+		}
 	}
 	
 	public int getPowerHourSongCount()
@@ -61,7 +66,10 @@ public class SongListPanel extends JPanel implements MouseListener, JPowerHourLi
 	public void removePowerHourSong()
 	{
 		if(list.getSelectedIndex() != -1)
+		{
 			listModel.remove(list.getSelectedIndex());
+			setSaved(false);
+		}
 	}
 	
 	public void up()
@@ -74,6 +82,7 @@ public class SongListPanel extends JPanel implements MouseListener, JPowerHourLi
 			listModel.set(index-1, b);
 			listModel.set(index, a);
 			list.setSelectedIndex(index-1);
+			setSaved(false);
 		}
 	}
 	
@@ -87,6 +96,7 @@ public class SongListPanel extends JPanel implements MouseListener, JPowerHourLi
 			listModel.set(index, a);
 			listModel.set(index+1, b);
 			list.setSelectedIndex(index+1);
+			setSaved(false);
 		}
 	}
 	
@@ -109,7 +119,7 @@ public class SongListPanel extends JPanel implements MouseListener, JPowerHourLi
 			if(index != -1)
 			{
 				JPowerHourSong song = (JPowerHourSong) listModel.get(index);
-				EditSongPanel panel = new EditSongPanel(song);
+				EditSongPanel panel = new EditSongPanel(song, this);
 				panel.show();
 			}
 		}
@@ -166,5 +176,15 @@ public class SongListPanel extends JPanel implements MouseListener, JPowerHourLi
 			int currentlyPlayingNumber) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public boolean isSaved()
+	{
+		return saved;
+	}
+	
+	public void setSaved(boolean saved)
+	{
+		this.saved = saved;
 	}
 }

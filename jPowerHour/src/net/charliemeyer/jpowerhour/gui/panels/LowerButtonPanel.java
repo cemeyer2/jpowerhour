@@ -142,7 +142,7 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
 	            		if(Extension.getExtension(f).equals(Extension.mp3))
 	            		{
 	            			JPowerHourSong song = new JPowerHourSong(f);
-	                    	this.songListPanel.addPowerHourSong(song);
+	                    	this.songListPanel.addPowerHourSong(song, false);
 	            		}
             		}
             	}
@@ -189,7 +189,7 @@ public class LowerButtonPanel extends JPanel implements ActionListener, JPowerHo
             try
             {
             	JPowerHourSong song = new JPowerHourSong(file);
-            	this.songListPanel.addPowerHourSong(song);
+            	this.songListPanel.addPowerHourSong(song, false);
             }
             catch(BasicPlayerException bpe)
             {

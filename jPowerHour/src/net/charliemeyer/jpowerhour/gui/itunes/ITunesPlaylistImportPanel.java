@@ -133,7 +133,7 @@ public class ITunesPlaylistImportPanel extends JPanel implements ActionListener
 						if(Extension.getExtension(f).equals(Extension.mp3))
 						{
 							JPowerHourSong song = new JPowerHourSong(f);
-							parent.getSongListPanel().addPowerHourSong(song);
+							parent.getSongListPanel().addPowerHourSong(song,false);
 						}
 					}
 					else
