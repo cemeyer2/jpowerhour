@@ -80,7 +80,7 @@ public class UpperStatusPanel extends JPanel implements BasicPlayerListener, JPo
 					}
 				}
 			}
-		});
+		},"Upper Label Changer");
 		th.start();
 	}
 

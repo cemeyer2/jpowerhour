@@ -24,6 +24,7 @@ import net.charliemeyer.jpowerhour.JPowerHourSong;
 import net.charliemeyer.jpowerhour.JPowerHourThread;
 import net.charliemeyer.jpowerhour.gui.itunes.ITunesPlaylistImportPanel;
 import net.charliemeyer.jpowerhour.gui.panels.AboutPanel;
+import net.charliemeyer.jpowerhour.gui.panels.FMLPanel;
 import net.charliemeyer.jpowerhour.gui.panels.LowerButtonPanel;
 import net.charliemeyer.jpowerhour.gui.panels.ManageInterludesPanel;
 import net.charliemeyer.jpowerhour.gui.panels.SongListPanel;
@@ -47,17 +48,20 @@ public class JPowerHourGUI implements ActionListener, WindowListener
 	private File currentlyLoadedFile;
 	private ListPlayersPanel listPlayersPanel;
 	private ManageInterludesPanel manageInterludesPanel;
+	private FMLPanel fmlPanel;
 	
 	private final int GUI_WIDTH = 400;
 	private final int GUI_HEIGHT = 800;
 	
-	private JMenuItem quit,open,openItunes,save,saveAs,onlineHelp,about,managePlayers,manageInterludes;
+	private JMenuItem quit,open,openItunes,save,saveAs,onlineHelp,about,managePlayers,manageInterludes,fml;
 	
 	public JPowerHourGUI()
 	{
 		thread = new JPowerHourThread();
 		listPlayersPanel = new ListPlayersPanel();
 		manageInterludesPanel = new ManageInterludesPanel();
+		fmlPanel = new FMLPanel();
+		
 		thread.addPowerHourListener(manageInterludesPanel);
 		thread.addPowerHourListener(listPlayersPanel);
 		
@@ -115,12 +119,15 @@ public class JPowerHourGUI implements ActionListener, WindowListener
 		JMenu options = new JMenu("Options");
 		managePlayers = new JMenuItem("Manage Players");
 		manageInterludes = new JMenuItem("Manage Interludes");
+		fml = new JMenuItem("Toggle FMLs");
 		
 		managePlayers.addActionListener(this);
 		manageInterludes.addActionListener(this);
+		fml.addActionListener(this);
 		
 		options.add(managePlayers);
 		options.add(manageInterludes);
+		options.add(fml);
 		menubar.add(options);
 		
 		JMenu help = new JMenu("Help");
@@ -229,6 +236,21 @@ public class JPowerHourGUI implements ActionListener, WindowListener
 		else if(managePlayers.equals(source))
 		{
 			handleManagePlayersAction();
+		}
+		else if(fml.equals(source))
+		{
+			handleFMLAction();
+		}
+	}
+
+	private void handleFMLAction() {
+		if(fmlPanel.isShowing())
+		{
+			fmlPanel.hide();
+		}
+		else
+		{
+			fmlPanel.show();
 		}
 	}
 
@@ -419,6 +441,7 @@ public class JPowerHourGUI implements ActionListener, WindowListener
 				handleSaveAction();
 			}
 		}
+		System.exit(0);
 	}
 
 	public void windowDeactivated(WindowEvent arg0) {
